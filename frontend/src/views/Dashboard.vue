@@ -1,8 +1,17 @@
 <template>
-  <v-container>
-    <h1>Hello, {{ user.username }}!</h1>
-    <v-btn class="mt-3" @click="logout" color="error">Logout</v-btn>
-  </v-container>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <v-toolbar-title>Welcome to the Dashboard</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn @click="logout" color="white" variant="text"> Logout </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <v-container class="mt-5">
+        <h1>Hello, {{ user.username }}!</h1>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
