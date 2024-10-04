@@ -27,6 +27,9 @@ export default {
       this.$store.dispatch("logout");
       this.$router.push("/login");
     },
+    goToProfile() {
+      alert("This functionality will be available soon.");
+    },
   },
   created() {
     this.$store.dispatch("getUserInfo");
