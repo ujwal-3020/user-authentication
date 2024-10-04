@@ -3,7 +3,7 @@
     <v-app-bar app color="primary" dark>
       <v-toolbar-title>Food Delivery</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn @click="logout" color="white" variant="text"> Profile </v-btn>
+      <v-btn @click="goToProfile" color="white" variant="text"> Profile </v-btn>
       <v-btn @click="logout" color="white" variant="text"> Logout </v-btn>
     </v-app-bar>
 
