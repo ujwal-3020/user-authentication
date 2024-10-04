@@ -2,6 +2,7 @@ const { verifyToken } = require("../utils/jwt.utils.js");
 
 const authenticate = (req, res, next) => {
   const token = req.header("Authorization").split(" ")[1]; // WHEN PASSING TOKEN THROUGH HEADER
+  // const token = req.header("Authorization").replace('Bearer ', '')
   // const token = req.cookies.token;
 
   if (!token) {
