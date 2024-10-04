@@ -5,6 +5,7 @@ const roleApi = require("./features/role/roleApi.js");
 const authApi = require("./features/auth/authApi.js");
 const { seedRoles } = require("./seeders/seedRoles.js");
 const cors = require("cors");
+const logger = require("./logger.js");
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,28 @@ const corsOptions = {
   credentials: true, // ALLOW CREDENTIALS (COOKIES, AUTHORIZATION HEADERS)
 };
 app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  res.on("finish", () => {
+    let logLevel = "info";
+
+    if (res.statusCode >= 500) {
+      logLevel = "error";
+    } else if (res.statusCode >= 400) {
+      logLevel = "warn";
+    } else if (res.statusCode >= 300) {
+      logLevel = "verbose";
+    }
+
+    logger.log(
+      logLevel,
+      `${req.method} ${req.originalUrl} - Status: ${res.statusCode}`
+    );
+  });
+
+  next();
+});
+
 app.use("/api/v1/user", userApi);
 app.use("/api/v1/role", roleApi);
 app.use("/api/v1/auth", authApi);
