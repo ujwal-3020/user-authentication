@@ -6,6 +6,7 @@ const authApi = require("./features/auth/authApi.js");
 const { seedRoles } = require("./seeders/seedRoles.js");
 const cors = require("cors");
 const logger = require("./logger.js");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ const corsOptions = {
   credentials: true, // ALLOW CREDENTIALS (COOKIES, AUTHORIZATION HEADERS)
 };
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   res.on("finish", () => {

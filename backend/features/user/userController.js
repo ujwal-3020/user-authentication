@@ -25,9 +25,9 @@ const UserController = {
     try {
       const result = await UserService.loginUser(email, password, role); // FOR HEADERS
 
-      // res.cookie("token", res.token, {
-      //   httpOnly: true,
-      //   secure: true,
+      // res.cookie("token", result.token, {
+      //   // httpOnly: true,
+      //   // secure: true,
       //   maxAge: 30 * 24 * 60 * 60 * 1000,
       // });
 
@@ -47,6 +47,8 @@ const UserController = {
 
   getUser: async (req, res) => {
     let user = req.userInfo;
+    // console.log(req.cookies);
+
     try {
       user = await UserService.getUser(user.email);
       return res.status(200).json({

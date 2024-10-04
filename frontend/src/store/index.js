@@ -66,6 +66,7 @@ export default new Vuex.Store({
       try {
         const res = await axios.get("http://localhost:3000/api/v1/user/me", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          withCredentials: true,
         });
         commit("setUser", res.data.user);
       } catch (error) {
