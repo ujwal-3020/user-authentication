@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "http://192.1.200.84:5174", // ALLOW YOUR FRONTEND URL
+  origin: "http://192.1.200.84:5173", // ALLOW YOUR FRONTEND URL
   credentials: true, // ALLOW CREDENTIALS (COOKIES, AUTHORIZATION HEADERS)
 };
 app.use(cors(corsOptions));

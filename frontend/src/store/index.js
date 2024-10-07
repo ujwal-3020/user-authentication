@@ -19,8 +19,8 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.token = "";
-      state.user = {};
       localStorage.removeItem("token");
+      state.user = {};
     },
   },
   actions: {
@@ -81,7 +81,7 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit("logout");
       toast.success("Logged out Successfully", {
-        autoClose: 1500,
+        autoClose: 1000,
         type: "success",
         position: "bottom-center",
       });
