@@ -63,7 +63,7 @@ export default {
         this.confirmPasswordErrors.length == 0
       ) {
         const token = this.$route.params.token;
-        console.log(token);
+        // console.log(token);
 
         try {
           const config = {

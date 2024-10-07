@@ -118,7 +118,7 @@ export default {
           this.$router.push("/dashboard");
         }, 1500);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
 
         toast.error(error.message, {
           autoClose: 1500,

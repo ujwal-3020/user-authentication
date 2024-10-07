@@ -15,7 +15,7 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.user = user;
-      console.log(user);
+      // console.log(user);
     },
     logout(state) {
       state.token = "";

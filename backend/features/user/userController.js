@@ -37,7 +37,7 @@ const UserController = {
         message: "Login successful",
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
 
       return res.status(401).json({
         error: error.message,

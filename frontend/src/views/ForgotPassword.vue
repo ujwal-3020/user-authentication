@@ -89,7 +89,7 @@ export default {
       } else if (!emailRegex.test(email)) {
         errors.push("Email must be a valid email address.");
       }
-      console.log(errors);
+      // console.log(errors);
 
       return errors;
     },
