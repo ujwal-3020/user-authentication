@@ -62,19 +62,30 @@ export default new Vuex.Store({
       }
     },
 
-    async getUserInfo({ commit }) {
+    async getUserInfo({ commit }, router) {
       try {
+        const token = localStorage.getItem("token");
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const expirationTime = payload.exp * 1000;
+        if (Date.now() > expirationTime) {
+          toast.info("Session Timeout. Please login again.", {
+            autoClose: 1500,
+            type: "info",
+            position: "bottom-center",
+          });
+          setTimeout(() => {
+            router.push("/login");
+          }, 1500);
+          commit("logout");
+          return;
+        }
         const res = await axios.get("http://192.1.200.84:3000/api/v1/user/me", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           withCredentials: true,
         });
         commit("setUser", res.data.user);
       } catch (error) {
-        toast.error(error.response.data.error, {
-          autoClose: 1500,
-          type: "error",
-          position: "bottom-center",
-        });
+        throw new Error(error.response.data.error);
       }
     },
 

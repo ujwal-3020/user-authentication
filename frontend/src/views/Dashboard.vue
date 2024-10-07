@@ -34,7 +34,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("getUserInfo");
+    this.$store.dispatch("getUserInfo", this.$router);
   },
 };
 </script>
