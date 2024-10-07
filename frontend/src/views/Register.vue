@@ -200,7 +200,8 @@ export default {
 }
 
 .login-link {
-  padding: 0;
+  min-width: 0px;
+  padding: 0px;
   text-transform: none;
   font-weight: bold;
 }
@@ -209,6 +210,7 @@ export default {
   background-color: #e0f7fa;
   border-radius: 5px;
 }
+
 .rounded-corner {
   border-radius: 8px 8px 0 0;
 }

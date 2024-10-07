@@ -36,7 +36,12 @@
           ></v-select>
           <v-row>
             <v-col class="text-right">
-              <v-btn variant="text" @click="goToForgotPassword" color="error"
+              <v-btn
+                variant="text"
+                @click="goToForgotPassword"
+                color="error"
+                density="compact"
+                class="pa-0"
                 >Forgot Password?</v-btn
               >
             </v-col>
