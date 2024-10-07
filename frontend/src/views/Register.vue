@@ -169,7 +169,7 @@ export default {
 
         setTimeout(() => {
           this.$router.push("/login");
-        }, 4000);
+        }, 3000);
       } catch (error) {
         toast.error(error.message, {
           autoClose: 2000,

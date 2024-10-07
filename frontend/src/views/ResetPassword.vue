@@ -85,7 +85,7 @@ export default {
           });
           setTimeout(() => {
             this.$router.push("/login");
-          }, 4000);
+          }, 3000);
         } catch (error) {
           toast.error(error.response.data.error, {
             autoClose: 2000,
@@ -121,17 +121,15 @@ export default {
 
 <style scoped>
 .form-container {
-  max-width: 400px; /* Set a max-width for the form container */
-  width: 100%; /* Make it responsive */
-  /* padding: 20px; Add some padding */
-  background-color: white; /* Optional: background color for better visibility */
-  border-radius: 8px; /* Optional: round the corners */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+  max-width: 400px;
+  width: 100%;
+  background-color: white; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
 }
 
 .text-center {
-  text-align: center; /* Center the heading */
-  /* margin-bottom: 10px; Add space below the heading */
+  text-align: center; 
 }
 
 .rounded-corner {

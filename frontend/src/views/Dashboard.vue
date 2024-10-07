@@ -27,7 +27,7 @@ export default {
       this.$store.dispatch("logout");
       setTimeout(() => {
         this.$router.push("/login");
-      }, 4000);
+      }, 3000);
     },
     goToProfile() {
       alert("This functionality will be available soon.");
