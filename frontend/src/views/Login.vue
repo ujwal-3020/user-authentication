@@ -104,17 +104,17 @@ export default {
         });
 
         toast.success("Login Successfully", {
-          autoClose: 2000,
+          autoClose: 1500,
           type: "success",
           position: "bottom-center",
         });
 
         setTimeout(() => {
           this.$router.push("/dashboard");
-        }, 3000);
+        }, 1500);
       } catch (error) {
         toast.error(error.message, {
-          autoClose: 2000,
+          autoClose: 1500,
           type: "error",
           position: "bottom-center",
         });

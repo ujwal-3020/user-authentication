@@ -71,7 +71,7 @@ export default new Vuex.Store({
         commit("setUser", res.data.user);
       } catch (error) {
         toast.error(error.response.data.error, {
-          autoClose: 2000,
+          autoClose: 1500,
           type: "error",
           position: "bottom-center",
         });
@@ -81,7 +81,7 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit("logout");
       toast.success("Logged out Successfully", {
-        autoClose: 2000,
+        autoClose: 1500,
         type: "success",
         position: "bottom-center",
       });

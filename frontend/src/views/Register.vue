@@ -146,7 +146,7 @@ export default {
         this.roleErrors.length
       ) {
         toast.error("Please enter all the values correctly", {
-          autoClose: 2000,
+          autoClose: 1500,
           type: "error",
           position: "bottom-center",
         });
@@ -162,17 +162,17 @@ export default {
         });
 
         toast.success("Registered Successfully", {
-          autoClose: 2000,
+          autoClose: 1500,
           type: "success",
           position: "bottom-center",
         });
 
         setTimeout(() => {
           this.$router.push("/login");
-        }, 3000);
+        }, 1500);
       } catch (error) {
         toast.error(error.message, {
-          autoClose: 2000,
+          autoClose: 1500,
           type: "error",
           position: "bottom-center",
         });
