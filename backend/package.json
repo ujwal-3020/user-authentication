@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd ../frontend && npm install && npm run build && cd ../backend && npm install",
-    "dev": "npm --env-file=.env app.js"
+    "dev": "npm app.js"
   },
   "author": "",
   "license": "ISC",
