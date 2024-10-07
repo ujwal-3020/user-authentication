@@ -34,7 +34,7 @@ export default new Vuex.Store({
         };
 
         const res = await axios.post(
-          "http://localhost:3000/api/v1/user/login",
+          "http://192.1.200.84:3000/api/v1/user/login",
           userData,
           config
         );
@@ -53,7 +53,7 @@ export default new Vuex.Store({
           },
         };
         const response = await axios.post(
-          "http://localhost:3000/api/v1/user/register",
+          "http://192.1.200.84:3000/api/v1/user/register",
           userData,
           config
         );
@@ -64,7 +64,7 @@ export default new Vuex.Store({
 
     async getUserInfo({ commit }) {
       try {
-        const res = await axios.get("http://localhost:3000/api/v1/user/me", {
+        const res = await axios.get("http://192.1.200.84:3000/api/v1/user/me", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           withCredentials: true,
         });

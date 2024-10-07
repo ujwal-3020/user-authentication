@@ -72,7 +72,7 @@ export default {
             },
           };
           await axios.post(
-            `http://localhost:3000/api/v1/auth/reset-password/${token}`,
+            `http://192.1.200.84:3000/api/v1/auth/reset-password/${token}`,
             {
               password: this.password,
             },

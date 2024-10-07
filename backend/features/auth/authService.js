@@ -10,7 +10,7 @@ const AuthService = {
     // GENERATE A RESET TOKEN (RANDOM SECURE STRING)
     const passwordChangeToken = await user.createPasswordChangeToken();
 
-    const resetURL = `${protocol}://localhost:5173/reset-password/${passwordChangeToken}`;
+    const resetURL = `${protocol}://192.1.200.84:5174/reset-password/${passwordChangeToken}`;
 
     const message = `<p>We have received a request to reset your password. Please use the link below to reset your password:</p>
         <p><a href="${resetURL}">Reset Password</a></p>
