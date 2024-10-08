@@ -4,7 +4,7 @@ const validateEmail = (email) => {
   const errors = [];
 
   if (!email) {
-    errors.push("Email is required.");
+    errors.push("Email is required");
   } else if (!emailRegex.test(email)) {
     errors.push("Email must be a valid email address.");
   }

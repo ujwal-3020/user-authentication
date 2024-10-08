@@ -101,6 +101,24 @@ export default {
   methods: {
     async submitLogin() {
       try {
+        this.emailErrors = this.email ? [] : ["Email is required"];
+        this.passwordErrors = this.password ? [] : ["Password is required"];
+        this.roleErrors = this.selectedRole ? [] : ["Please select a role"];
+
+        if (
+          // this.usernameErrors.length ||
+          this.emailErrors.length ||
+          this.passwordErrors.length ||
+          this.roleErrors.length
+        ) {
+          // toast.error("Please enter all the values correctly", {
+          //   autoClose: 1500,
+          //   type: "error",
+          //   position: "top-right",
+          // });
+          return;
+        }
+
         await this.$store.dispatch("login", {
           email: this.email,
           password: this.password,

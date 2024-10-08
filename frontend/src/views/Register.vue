@@ -119,7 +119,7 @@ export default {
           : ["Username is required"];
       this.emailErrors = validateEmail(this.email);
       this.passwordErrors = validatePassword(this.password);
-      this.roleErrors = this.selectedRole ? [] : ["Role is required."];
+      this.roleErrors = this.selectedRole ? [] : ["Please select a role"];
 
       if (
         this.usernameErrors.length ||
@@ -127,11 +127,11 @@ export default {
         this.passwordErrors.length ||
         this.roleErrors.length
       ) {
-        toast.error("Please enter all the values correctly", {
-          autoClose: 1500,
-          type: "error",
-          position: "top-right",
-        });
+        // toast.error("Please enter all the values correctly", {
+        //   autoClose: 1500,
+        //   type: "error",
+        //   position: "top-right",
+        // });
         return;
       }
 
