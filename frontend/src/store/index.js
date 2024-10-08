@@ -70,7 +70,7 @@ export default new Vuex.Store({
           toast.info("Session Timeout. Please login again.", {
             autoClose: 1500,
             type: "info",
-            position: "bottom-center",
+            position: "top-right",
           });
           setTimeout(() => {
             router.push("/login");
@@ -93,7 +93,7 @@ export default new Vuex.Store({
       toast.success("Logged out Successfully", {
         autoClose: 1000,
         type: "success",
-        position: "bottom-center",
+        position: "top-right",
       });
     },
   },

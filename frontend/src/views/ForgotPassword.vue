@@ -70,13 +70,13 @@ export default {
           toast.success(res.data.message, {
             autoClose: 1500,
             type: "success",
-            position: "bottom-center",
+            position: "top-right",
           });
         } catch (error) {
           toast.error(error.response.data.error, {
             autoClose: 1500,
             type: "error",
-            position: "bottom-center",
+            position: "top-right",
           });
         }
       }

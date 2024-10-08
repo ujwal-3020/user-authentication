@@ -110,7 +110,7 @@ export default {
         toast.success("Login Successfully", {
           autoClose: 1500,
           type: "success",
-          position: "bottom-center",
+          position: "top-right",
         });
 
         setTimeout(() => {
@@ -122,7 +122,7 @@ export default {
         toast.error(error.message, {
           autoClose: 1500,
           type: "error",
-          position: "bottom-center",
+          position: "top-right",
         });
       }
     },

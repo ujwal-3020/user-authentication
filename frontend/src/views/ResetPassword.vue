@@ -78,7 +78,7 @@ export default {
             },
             config
           );
-          toast.success("Password changed", {
+          toast.success("Password changed. You will be redirected to login page.", {
             autoClose: 1500,
             type: "success",
             position: "bottom-center",

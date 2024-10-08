@@ -5,7 +5,7 @@ const UserRepository = require("../user/userRepository.js");
 const AuthService = {
   forgotPassword: async (protocol, email) => {
     const user = await UserRepository.findUserByEmail(email);
-    if (!user) throw new Error("User not exist");
+    if (!user) throw new Error("No account found with this email. Please enter a valid email address.");
 
     // GENERATE A RESET TOKEN (RANDOM SECURE STRING)
     const passwordChangeToken = await user.createPasswordChangeToken();
