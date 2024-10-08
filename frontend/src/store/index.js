@@ -38,7 +38,7 @@ export default new Vuex.Store({
           config
         );
 
-        commit("setToken", res.data.token);
+        // commit("setToken", res.data.token);
       } catch (error) {
         throw new Error(error.response.data.error);
       }
@@ -67,7 +67,7 @@ export default new Vuex.Store({
         const payload = JSON.parse(atob(token.split(".")[1]));
         const expirationTime = payload.exp * 1000;
         if (Date.now() > expirationTime) {
-          toast.info("Session Timeout. Please login again.", {
+          toast.info("Your session is expired. Please login again.", {
             autoClose: 1500,
             type: "info",
             position: "top-right",

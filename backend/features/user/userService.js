@@ -43,21 +43,31 @@ const UserService = {
     return user;
   },
 
-  loginUser: async (email, password, roleName) => {
-    const user = await UserRepository.findUserByEmail(email);
-    if (!user) throw new Error("User not found");
+  loginUser: async (username, email, password, roleName) => {
+    const user = await UserRepository.findUserByEmailOrUsername(
+      username,
+      email
+    );
+    if (!user)
+      throw new Error(
+        "No account found with this email or username. Please enter a valid email address."
+      );
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw new Error("Invalid Credentials");
+    if (!isMatch)
+      throw new Error("Password is wrong. Please enter a valid password.");
 
     const role = await RoleRepository.findRoleByName(roleName);
-    if (!role) throw new Error("Invalid Role");
+    if (!role) throw new Error("You cannot register for this role.");
 
     const userRole = await UserRoleRepository.findUserRole(
       user.uuid,
       role.uuid
     );
-    if (!userRole) throw new Error("You are not authenticated!");
+    if (!userRole)
+      throw new Error(
+        `You cannot login as ${roleName}. If you are already registered as ${roleName} then please contact support.`
+      );
 
     const token = generateToken({
       id: user.uuid,

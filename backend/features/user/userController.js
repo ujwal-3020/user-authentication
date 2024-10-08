@@ -21,18 +21,27 @@ const UserController = {
   },
 
   login: async (req, res) => {
-    const { email, password, role } = req.body;
+    const { username, email, password, role } = req.body;
     try {
-      const result = await UserService.loginUser(email, password, role); // FOR HEADERS
+      if (!username && !email) {
+        throw new Error("Username or email is required");
+      }
 
-      // res.cookie("token", result.token, {
-      //   // httpOnly: true,
-      //   // secure: true,
-      //   maxAge: 30 * 24 * 60 * 60 * 1000,
-      // });
+      const result = await UserService.loginUser(
+        username,
+        email,
+        password,
+        role
+      );
+
+      res.cookie("token", result.token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+      });
 
       return res.status(200).json({
-        token: result.token, // FOR HEADERS, SAVE THIS IN LOCAL STORAGE THROUGH FRONTEND CODE
+        // token: result.token
         user: result.user,
         message: "Login successful",
       });

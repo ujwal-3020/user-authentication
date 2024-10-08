@@ -8,6 +8,12 @@ const UserRepository = {
     });
   },
 
+  findUserByEmailOrUsername: async (username, email) => {
+    return await db.User.findOne({
+      $or: [{ email }, { username }],
+    });
+  },
+
   createUser: async (username, email, password) => {
     return await db.User.create({
       username,
