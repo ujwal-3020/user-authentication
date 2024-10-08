@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import "vue3-toastify/dist/index.css";
 import router from "./router/index.js";
 import store from "./store/index.js";
 import "vuetify/styles";

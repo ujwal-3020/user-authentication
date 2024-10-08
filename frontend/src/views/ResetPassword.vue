@@ -38,7 +38,7 @@
 <script>
 import axios from "axios";
 import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
+
 export default {
   data() {
     return {
@@ -123,13 +123,13 @@ export default {
 .form-container {
   max-width: 400px;
   width: 100%;
-  background-color: white; 
-  border-radius: 8px; 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .text-center {
-  text-align: center; 
+  text-align: center;
 }
 
 .rounded-corner {
