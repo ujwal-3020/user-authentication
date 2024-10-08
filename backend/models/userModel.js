@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const validatePassword = require("../utils/validatePassword.utils.js");
 
 const UserModel = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -46,13 +45,11 @@ const UserModel = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate: async (user) => {
           if (user.password && !user._previousDataValues.password) {
-            validatePassword(user.password);
             user.password = await bcrypt.hash(user.password, 10);
           }
         },
         beforeUpdate: async (user) => {
           if (user.changed("password")) {
-            validatePassword(user.password);
             user.password = await bcrypt.hash(user.password, 10);
             user.passwordChangedAt = new Date();
           }

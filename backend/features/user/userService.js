@@ -75,6 +75,8 @@ const UserService = {
       role: roleName,
     });
 
+    // console.log(token);
+
     return {
       token,
       user,

@@ -1,13 +1,16 @@
 const UserService = require("./userService.js");
+const decryptPassword = require("../../utils/decryptPassword.js");
 
 const UserController = {
   register: async (req, res) => {
     const { username, email, password, role } = req.body;
     try {
+      const decryptedPassword = decryptPassword(password);
+
       const user = await UserService.registerUser(
         username,
         email,
-        password,
+        decryptedPassword,
         role
       );
       return res.status(201).json({

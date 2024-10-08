@@ -1,29 +1,30 @@
 import Vuex from "vuex";
 import axios from "axios";
 import { toast } from "vue3-toastify";
+import cookies from "js-cookie";
 
 export default new Vuex.Store({
   state: {
-    token: localStorage.getItem("token") || "",
+    // token: "",
     user: {},
   },
   mutations: {
-    setToken(state, token) {
-      state.token = token;
-      localStorage.setItem("token", token);
-    },
+    // setToken(state, token) {
+    //   state.token = token;
+    //   localStorage.setItem("token", token);
+    // },
     setUser(state, user) {
       state.user = user;
       // console.log(user);
     },
     logout(state) {
-      state.token = "";
-      localStorage.removeItem("token");
+      // state.token = "";
+      cookies.remove("token");
       state.user = {};
     },
   },
   actions: {
-    async login({ commit }, userData) {
+    async login(_, userData) {
       try {
         const config = {
           headers: {
@@ -63,25 +64,13 @@ export default new Vuex.Store({
 
     async getUserInfo({ commit }, router) {
       try {
-        const token = localStorage.getItem("token");
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        const expirationTime = payload.exp * 1000;
-        if (Date.now() > expirationTime) {
-          toast.info("Your session is expired. Please login again.", {
-            autoClose: 1500,
-            type: "info",
-            position: "top-right",
-          });
-          setTimeout(() => {
-            router.push("/login");
-          }, 1500);
-          commit("logout");
-          return;
-        }
         const res = await axios.get("http://192.1.200.84:3000/api/v1/user/me", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          // headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
+
+        // console.log(res);
+
         commit("setUser", res.data.user);
       } catch (error) {
         throw new Error(error.response.data.error);

@@ -76,6 +76,9 @@
 
 <script>
 import { toast } from "vue3-toastify";
+import validatePassword from "../utils/validatePassword.js";
+import validateEmail from "../utils/validateEmail.js";
+import encryptPassword from "../utils/encryptPassword.js";
 
 export default {
   data() {
@@ -107,35 +110,15 @@ export default {
     },
   },
   methods: {
-    validateEmail(email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const errors = [];
-      if (!email) {
-        errors.push("Email is required.");
-      } else if (!emailRegex.test(email)) {
-        errors.push("Email must be a valid email address.");
-      }
-      return errors;
-    },
-
-    validatePassword(password) {
-      const passwordRegex =
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      const errors = [];
-      if (!password) {
-        errors.push("Password is required.");
-      } else if (!passwordRegex.test(password)) {
-        errors.push(
-          "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character and length should be minimum 8."
-        );
-      }
-      return errors;
-    },
-
     async submitRegister() {
-      this.usernameErrors = this.username ? [] : ["Username is required."];
-      this.emailErrors = this.validateEmail(this.email);
-      this.passwordErrors = this.validatePassword(this.password);
+      this.usernameErrors =
+        this.username.length > 3
+          ? []
+          : this.username
+          ? ["Username must be of minimum 3 characters"]
+          : ["Username is required"];
+      this.emailErrors = validateEmail(this.email);
+      this.passwordErrors = validatePassword(this.password);
       this.roleErrors = this.selectedRole ? [] : ["Role is required."];
 
       if (
@@ -153,10 +136,12 @@ export default {
       }
 
       try {
+        const encryptedPassword = encryptPassword(this.password);
+
         await this.$store.dispatch("register", {
           username: this.username,
           email: this.email,
-          password: this.password,
+          password: encryptedPassword,
           role: this.selectedRole,
         });
 
