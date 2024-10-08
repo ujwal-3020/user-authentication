@@ -129,6 +129,7 @@ export default {
           autoClose: 1500,
           type: "success",
           position: "top-right",
+          hideProgressBar: true
         });
 
         setTimeout(() => {
@@ -141,6 +142,7 @@ export default {
           autoClose: 1500,
           type: "error",
           position: "top-right",
+          hideProgressBar: true
         });
       }
     },

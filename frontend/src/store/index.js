@@ -83,6 +83,7 @@ export default new Vuex.Store({
         autoClose: 1000,
         type: "success",
         position: "top-right",
+        hideProgressBar: true,
       });
     },
   },

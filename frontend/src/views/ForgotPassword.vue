@@ -71,12 +71,14 @@ export default {
             autoClose: 1500,
             type: "success",
             position: "top-right",
+            hideProgressBar: true,
           });
         } catch (error) {
           toast.error(error.response.data.error, {
             autoClose: 1500,
             type: "error",
             position: "top-right",
+            hideProgressBar: true,
           });
         }
       }

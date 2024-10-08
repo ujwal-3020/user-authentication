@@ -78,11 +78,15 @@ export default {
             },
             config
           );
-          toast.success("Password changed. You will be redirected to login page.", {
-            autoClose: 1500,
-            type: "success",
-            position: "bottom-center",
-          });
+          toast.success(
+            "Password changed. You will be redirected to login page.",
+            {
+              autoClose: 1500,
+              type: "success",
+              position: "bottom-center",
+              hideProgressBar: true,
+            }
+          );
           setTimeout(() => {
             this.$router.push("/login");
           }, 1500);
@@ -91,6 +95,7 @@ export default {
             autoClose: 1500,
             type: "error",
             position: "bottom-center",
+            hideProgressBar: true,
           });
         }
       }
