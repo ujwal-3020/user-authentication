@@ -26,7 +26,7 @@
             @click:appendInner="visible = !visible"
           ></v-text-field>
           <v-select
-            label="Select Role"
+            label="Login as"
             v-model="selectedRole"
             :items="roles"
             variant="outlined"
@@ -53,7 +53,7 @@
           </v-row>
           <v-row class="mt-3 d-flex justify-center">
             <v-col class="d-flex align-center justify-center">
-              <span>Not a member? </span>
+              <span>Don't have an account? </span>
               <v-btn
                 variant="text"
                 @click="goToRegister"
@@ -129,7 +129,7 @@ export default {
           autoClose: 1500,
           type: "success",
           position: "top-right",
-          hideProgressBar: true
+          hideProgressBar: true,
         });
 
         setTimeout(() => {
@@ -142,7 +142,7 @@ export default {
           autoClose: 1500,
           type: "error",
           position: "top-right",
-          hideProgressBar: true
+          hideProgressBar: true,
         });
       }
     },

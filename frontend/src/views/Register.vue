@@ -37,7 +37,7 @@
           ></v-text-field>
 
           <v-select
-            label="Select Role"
+            label="Register As"
             v-model="selectedRole"
             :items="roles"
             variant="outlined"
@@ -149,7 +149,7 @@ export default {
           autoClose: 1500,
           type: "success",
           position: "top-right",
-          hideProgressBar: true
+          hideProgressBar: true,
         });
 
         setTimeout(() => {
@@ -160,7 +160,7 @@ export default {
           autoClose: 1500,
           type: "error",
           position: "top-right",
-          hideProgressBar: true
+          hideProgressBar: true,
         });
       }
     },
