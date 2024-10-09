@@ -7,12 +7,12 @@
       <div class="pa-5">
         <v-form @submit.prevent="submitLogin">
           <v-text-field
-            label="Email"
-            v-model="email"
+            label="Email / Username"
+            v-model="loginIdentifier"
             variant="outlined"
             required
             class="mt-3"
-            :error-messages="emailErrors"
+            :error-messages="loginIdentifierErrors"
           ></v-text-field>
           <v-text-field
             label="Password"
@@ -77,37 +77,43 @@ import { toast } from "vue3-toastify";
 export default {
   data() {
     return {
-      email: "",
+      loginIdentifier: "",
       password: "",
       selectedRole: null,
       roles: ["Customer", "Delivery Partner", "Restaurant Owner"],
-      emailErrors: [],
+      loginIdentifierErrors: [],
       passwordErrors: [],
       roleErrors: [],
       visible: false,
     };
   },
   watch: {
-    email(newVal) {
-      this.emailErrors = newVal ? [] : ["Email is required"];
+    loginIdentifier(newVal) {
+      this.loginIdentifierErrors = newVal
+        ? []
+        : ["Please enter your email or username"];
     },
     password(newVal) {
-      this.passwordErrors = newVal ? [] : ["Password is required"];
+      this.passwordErrors = newVal ? [] : ["Please enter your password"];
     },
     selectedRole(newVal) {
-      this.roleErrors = newVal ? [] : ["Role is required."];
+      this.roleErrors = newVal ? [] : ["Please select a role"];
     },
   },
   methods: {
     async submitLogin() {
       try {
-        this.emailErrors = this.email ? [] : ["Email is required"];
-        this.passwordErrors = this.password ? [] : ["Password is required"];
+        this.loginIdentifierErrors = this.loginIdentifier
+          ? []
+          : ["Please enter your email or username"];
+        this.passwordErrors = this.password
+          ? []
+          : ["Please enter your password"];
         this.roleErrors = this.selectedRole ? [] : ["Please select a role"];
 
         if (
           // this.usernameErrors.length ||
-          this.emailErrors.length ||
+          this.loginIdentifierErrors.length ||
           this.passwordErrors.length ||
           this.roleErrors.length
         ) {
@@ -120,7 +126,7 @@ export default {
         }
 
         await this.$store.dispatch("login", {
-          email: this.email,
+          loginIdentifier: this.loginIdentifier,
           password: this.password,
           role: this.selectedRole,
         });

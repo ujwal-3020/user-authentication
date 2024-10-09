@@ -24,23 +24,24 @@ const UserController = {
   },
 
   login: async (req, res) => {
-    const { username, email, password, role } = req.body;
+    const { loginIdentifier, password, role } = req.body;
     try {
-      if (!username && !email) {
-        throw new Error("Username or email is required");
+      if (!loginIdentifier) {
+        throw new Error("Please enter your username of email.");
       }
 
       const result = await UserService.loginUser(
-        username,
-        email,
+        loginIdentifier,
         password,
         role
       );
 
       res.cookie("token", result.token, {
         httpOnly: true,
-        secure: true,
-        maxAge: 30 * 24 * 60 * 60 * 1000,
+        path: "/",
+        // secure: true,
+        // sameSite: "Strict",
+        maxAge: 2592000000,
       });
 
       return res.status(200).json({
@@ -63,11 +64,31 @@ const UserController = {
 
     try {
       user = await UserService.getUser(user.email);
+
       return res.status(200).json({
         user,
       });
     } catch (error) {
       return res.status(400).json({
+        error: error.message,
+      });
+    }
+  },
+
+  logout: async (req, res) => {
+    console.log(123);
+
+    try {
+      res.clearCookie("token", {
+        path: "/",
+        httpOnly: true,
+      });
+      res.status(200).json({
+        message: "Logged out successfully",
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.status(401).json({
         error: error.message,
       });
     }

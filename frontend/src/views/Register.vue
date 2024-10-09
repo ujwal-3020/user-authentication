@@ -20,7 +20,7 @@
             v-model="email"
             variant="outlined"
             required
-            class="mt-3"
+            class="mt-4"
             :error-messages="emailErrors"
           ></v-text-field>
 
@@ -76,9 +76,11 @@
 
 <script>
 import { toast } from "vue3-toastify";
-import validatePassword from "../utils/validatePassword.js";
-import validateEmail from "../utils/validateEmail.js";
-import encryptPassword from "../utils/encryptPassword.js";
+import {
+  validateUsername,
+  validateEmail,
+  validatePassword,
+} from "../utils/validations.js";
 
 export default {
   data() {
@@ -97,26 +99,21 @@ export default {
   },
   watch: {
     username(newVal) {
-      this.usernameErrors = newVal ? [] : ["Username is required."];
+      this.usernameErrors = newVal ? [] : ["Username is required"];
     },
     email(newVal) {
-      this.emailErrors = this.validateEmail(newVal);
+      this.emailErrors = validateEmail(newVal);
     },
     password(newVal) {
-      this.passwordErrors = this.validatePassword(newVal);
+      this.passwordErrors = validatePassword(newVal);
     },
     selectedRole(newVal) {
-      this.roleErrors = newVal ? [] : ["Role is required."];
+      this.roleErrors = newVal ? [] : ["Please select a role"];
     },
   },
   methods: {
     async submitRegister() {
-      this.usernameErrors =
-        this.username.length > 3
-          ? []
-          : this.username
-          ? ["Username must be of minimum 3 characters"]
-          : ["Username is required"];
+      this.usernameErrors = validateUsername(this.username);
       this.emailErrors = validateEmail(this.email);
       this.passwordErrors = validatePassword(this.password);
       this.roleErrors = this.selectedRole ? [] : ["Please select a role"];

@@ -43,14 +43,14 @@ const UserService = {
     return user;
   },
 
-  loginUser: async (username, email, password, roleName) => {
+  loginUser: async (loginIdentifier, password, roleName) => {
     const user = await UserRepository.findUserByEmailOrUsername(
-      username,
-      email
+      loginIdentifier
     );
+
     if (!user)
       throw new Error(
-        "No account found with this email or username. Please enter a valid email address."
+        "No account found with this email or username. Please enter correct email or username."
       );
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -74,8 +74,6 @@ const UserService = {
       email: user.email,
       role: roleName,
     });
-
-    // console.log(token);
 
     return {
       token,

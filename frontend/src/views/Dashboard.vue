@@ -16,18 +16,31 @@
 </template>
 
 <script>
+import { toast } from "vue3-toastify";
 export default {
   computed: {
     user() {
+      // console.log(this.$store.state.user);
+
       return this.$store.state.user;
     },
   },
   methods: {
-    logout() {
-      this.$store.dispatch("logout");
-      setTimeout(() => {
-        this.$router.push("/login");
-      }, 1000);
+    async logout() {
+      try {
+        await this.$store.dispatch("logout");
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 2000);
+      } catch (error) {
+        console.log(123);
+
+        toast.error(error.message, {
+          autoClose: 1500,
+          position: "top-right",
+          hideProgressBar: true,
+        });
+      }
     },
     goToProfile() {
       alert("This functionality will be available soon.");

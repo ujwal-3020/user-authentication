@@ -8,9 +8,18 @@ const UserRepository = {
     });
   },
 
-  findUserByEmailOrUsername: async (username, email) => {
+  findUserByEmailOrUsername: async (loginIdentifier) => {
     return await db.User.findOne({
-      $or: [{ email }, { username }],
+      where: {
+        [Op.or]: [
+          {
+            email: loginIdentifier || "",
+          },
+          {
+            username: loginIdentifier || "",
+          },
+        ],
+      },
     });
   },
 

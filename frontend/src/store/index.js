@@ -1,12 +1,17 @@
 import Vuex from "vuex";
 import axios from "axios";
 import { toast } from "vue3-toastify";
-import cookies from "js-cookie";
+import jsCookie from "js-cookie";
 
 export default new Vuex.Store({
   state: {
     // token: "",
     user: {},
+  },
+  getters: {
+    getUser(state) {
+      return state.user;
+    },
   },
   mutations: {
     // setToken(state, token) {
@@ -17,14 +22,9 @@ export default new Vuex.Store({
       state.user = user;
       // console.log(user);
     },
-    logout(state) {
-      // state.token = "";
-      cookies.remove("token");
-      state.user = {};
-    },
   },
   actions: {
-    async login(_, userData) {
+    async login({ dispatch }, userData) {
       try {
         const config = {
           headers: {
@@ -39,7 +39,8 @@ export default new Vuex.Store({
           config
         );
 
-        // commit("setToken", res.data.token);
+        localStorage.setItem("isAuthenticated", true);
+        
       } catch (error) {
         throw new Error(error.response.data.error);
       }
@@ -62,29 +63,42 @@ export default new Vuex.Store({
       }
     },
 
-    async getUserInfo({ commit }, router) {
+    async getUserInfo({ state, commit }) {
+      // console.log(jsCookie.get("token"));
+
       try {
         const res = await axios.get("http://192.1.200.84:3000/api/v1/user/me", {
-          // headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
-
-        // console.log(res);
-
         commit("setUser", res.data.user);
       } catch (error) {
+        commit("setUser", {});
         throw new Error(error.response.data.error);
       }
     },
 
-    logout({ commit }) {
-      commit("logout");
-      toast.success("Logged out Successfully", {
-        autoClose: 1000,
-        type: "success",
-        position: "top-right",
-        hideProgressBar: true,
-      });
+    async logout({ commit }) {
+      try {
+        const res = await axios.post(
+          "http://192.1.200.84:3000/api/v1/user/logout",
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+
+        commit("setUser", {});
+        localStorage.removeItem("isAuthenticated");
+
+        toast.success("Logged out Successfully", {
+          autoClose: 1000,
+          type: "success",
+          position: "top-right",
+          hideProgressBar: true,
+        });
+      } catch (error) {
+        throw new Error(error.response.data.error);
+      }
     },
   },
 });
