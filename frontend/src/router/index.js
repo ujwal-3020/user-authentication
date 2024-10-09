@@ -4,7 +4,7 @@ import Register from "../views/Register.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 import Dashboard from "../views/Dashboard.vue";
-import store from "../store/index.js";
+import NotFound from "../components/NotFoundPage.vue";
 
 const routes = [
   {
@@ -40,6 +40,11 @@ const routes = [
   {
     path: "/",
     redirect: "/login",
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
   },
 ];
 

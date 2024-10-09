@@ -1,4 +1,5 @@
 const AuthService = require("./authService.js");
+const decryptPassword = require("../../utils/decryptPassword.js");
 
 const AuthController = {
   forgotPassword: async (req, res) => {
@@ -18,7 +19,8 @@ const AuthController = {
     const token = req.params.token;
 
     try {
-      const result = await AuthService.resetPassword(token, password);
+      const decryptedPassword = decryptPassword(password);
+      const result = await AuthService.resetPassword(token, decryptedPassword);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(400).json({

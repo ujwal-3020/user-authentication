@@ -139,7 +139,7 @@ export default {
         });
 
         setTimeout(() => {
-          this.$router.push("/dashboard");
+          this.$router.replace("/dashboard");
         }, 1500);
       } catch (error) {
         // console.log(error);
@@ -153,10 +153,10 @@ export default {
       }
     },
     goToRegister() {
-      this.$router.push("/register");
+      this.$router.replace("/register");
     },
     goToForgotPassword() {
-      this.$router.push("/forgot-password");
+      this.$router.replace("/forgot-password");
     },
   },
 };

@@ -30,7 +30,7 @@ export default {
       try {
         await this.$store.dispatch("logout");
         setTimeout(() => {
-          this.$router.push("/login");
+          this.$router.replace("/login");
         }, 2000);
       } catch (error) {
         console.log(123);

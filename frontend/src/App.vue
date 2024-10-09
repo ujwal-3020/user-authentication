@@ -4,4 +4,8 @@
 
 <script></script>
 
-<style scoped></style>
+<style>
+body {
+  background-color: rgb(238, 238, 238);
+}
+</style>

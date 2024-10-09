@@ -38,6 +38,7 @@
 <script>
 import axios from "axios";
 import { toast } from "vue3-toastify";
+import encryptPassword from "../utils/encryptPassword";
 
 export default {
   data() {
@@ -71,10 +72,13 @@ export default {
               "Content-Type": "application/json",
             },
           };
+
+          const encryptedPassword = encryptPassword(this.password);
+
           await axios.post(
             `http://192.1.200.84:3000/api/v1/auth/reset-password/${token}`,
             {
-              password: this.password,
+              password: encryptedPassword,
             },
             config
           );
@@ -88,7 +92,7 @@ export default {
             }
           );
           setTimeout(() => {
-            this.$router.push("/login");
+            this.$router.replace("/login");
           }, 1500);
         } catch (error) {
           toast.error(error.response.data.error, {

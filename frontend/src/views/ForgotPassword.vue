@@ -96,7 +96,7 @@ export default {
       return errors;
     },
     goToLogin() {
-      this.$router.push("/login");
+      this.$router.replace("/login");
     },
   },
 };

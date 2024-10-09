@@ -150,7 +150,7 @@ export default {
         });
 
         setTimeout(() => {
-          this.$router.push("/login");
+          this.$router.replace("/login");
         }, 1500);
       } catch (error) {
         toast.error(error.message, {
@@ -163,7 +163,7 @@ export default {
     },
 
     goToLogin() {
-      this.$router.push("/login");
+      this.$router.replace("/login");
     },
   },
 };

@@ -1,7 +1,7 @@
 import Vuex from "vuex";
 import axios from "axios";
 import { toast } from "vue3-toastify";
-import jsCookie from "js-cookie";
+import encryptPassword from "../utils/encryptPassword";
 
 export default new Vuex.Store({
   state: {
@@ -24,7 +24,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async login({ dispatch }, userData) {
+    async login(_, userData) {
       try {
         const config = {
           headers: {
@@ -33,6 +33,8 @@ export default new Vuex.Store({
           withCredentials: true,
         };
 
+        userData.password = encryptPassword(userData.password);
+
         const res = await axios.post(
           "http://192.1.200.84:3000/api/v1/user/login",
           userData,
@@ -40,7 +42,6 @@ export default new Vuex.Store({
         );
 
         localStorage.setItem("isAuthenticated", true);
-        
       } catch (error) {
         throw new Error(error.response.data.error);
       }

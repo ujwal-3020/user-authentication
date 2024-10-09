@@ -30,9 +30,11 @@ const UserController = {
         throw new Error("Please enter your username of email.");
       }
 
+      const decryptedPassword = decryptPassword(password);
+
       const result = await UserService.loginUser(
         loginIdentifier,
-        password,
+        decryptedPassword,
         role
       );
 
@@ -76,8 +78,6 @@ const UserController = {
   },
 
   logout: async (req, res) => {
-    console.log(123);
-
     try {
       res.clearCookie("token", {
         path: "/",
