@@ -5,6 +5,8 @@ import ForgotPassword from "../views/ForgotPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 import Dashboard from "../views/Dashboard.vue";
 import NotFound from "../components/NotFoundPage.vue";
+import store from "../store/index.js";
+import axios from "axios";
 
 const routes = [
   {
@@ -53,28 +55,47 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated");
+router.beforeEach(async (to, from, next) => {
+  const isAuthenticated = store.getters.getisAuthenticated; 
 
-  if (to.meta.requiresAuth) {
-    if (!isAuthenticated) {
-      next("/login");
-    } else {
+  if (isAuthenticated) {
+    if (to.meta.requiresAuth) {
       next();
+    } else {
+      next("/dashboard");
     }
   } else {
-    if (
-      isAuthenticated &&
-      (to.path === "/login" ||
+    try {
+
+      const result = await axios.get(
+        "http://192.1.200.84:3000/api/v1/user/me",
+        {
+          withCredentials: true,
+        }
+      );
+
+      store.commit("setUser", result.data.user);
+      store.commit("setIsAuthenticated", true);
+
+      if (
+        to.path === "/login" ||
         to.path === "/register" ||
         to.path === "/forgot-password" ||
-        to.path === "/reset-password")
-    ) {
-      next("/dashboard");
-    } else {
-      next();
+        to.path === "/reset-password"
+      ) {
+        next("/dahsboard");
+      } else {
+        next();
+      }
+    } catch (error) {
+      if (to.meta.requiresAuth) {
+        next("/login");
+      } else {
+        next();
+      }
     }
   }
+
 });
 
 export default router;

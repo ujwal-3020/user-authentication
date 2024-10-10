@@ -7,10 +7,14 @@ export default new Vuex.Store({
   state: {
     // token: "",
     user: {},
+    isAuthenticated: false,
   },
   getters: {
     getUser(state) {
       return state.user;
+    },
+    getisAuthenticated(state) {
+      return state.isAuthenticated;
     },
   },
   mutations: {
@@ -22,9 +26,12 @@ export default new Vuex.Store({
       state.user = user;
       // console.log(user);
     },
+    setIsAuthenticated(state, isAuthenticated) {
+      state.isAuthenticated = isAuthenticated;
+    },
   },
   actions: {
-    async login(_, userData) {
+    async login({ commit }, userData) {
       try {
         const config = {
           headers: {
@@ -41,7 +48,9 @@ export default new Vuex.Store({
           config
         );
 
-        localStorage.setItem("isAuthenticated", true);
+        commit("setIsAuthenticated", true);
+
+        // localStorage.setItem("isAuthenticated", true);
       } catch (error) {
         throw new Error(error.response.data.error);
       }
@@ -72,8 +81,10 @@ export default new Vuex.Store({
           withCredentials: true,
         });
         commit("setUser", res.data.user);
+        commit("setIsAuthenticated", true);
       } catch (error) {
         commit("setUser", {});
+        commit("setIsAuthenticated", false);
         throw new Error(error.response.data.error);
       }
     },
@@ -89,7 +100,8 @@ export default new Vuex.Store({
         );
 
         commit("setUser", {});
-        localStorage.removeItem("isAuthenticated");
+        commit("setIsAuthenticated", false);
+        // localStorage.removeItem("isAuthenticated");
 
         toast.success("Logged out Successfully", {
           autoClose: 1000,
