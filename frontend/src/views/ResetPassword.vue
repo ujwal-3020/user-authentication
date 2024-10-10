@@ -53,6 +53,7 @@ export default {
   methods: {
     async submitResetPassword() {
       this.passwordErrors = this.validatePassword(this.password);
+
       if (this.passwordErrors.length == 0) {
         this.confirmPasswordErrors = this.validateConfirmPassword(
           this.password,
@@ -82,25 +83,34 @@ export default {
             },
             config
           );
+
           toast.success(
             "Password changed. You will be redirected to login page.",
             {
-              autoClose: 1500,
+              autoClose: 2000,
               type: "success",
               position: "bottom-center",
               hideProgressBar: true,
             }
           );
+
           setTimeout(() => {
             this.$router.replace("/login");
-          }, 1500);
+          }, 2500);
+
         } catch (error) {
-          toast.error(error.response.data.error, {
-            autoClose: 1500,
+
+          toast.error(error.response.data.message, {
+            autoClose: 2000,
             type: "error",
             position: "bottom-center",
             hideProgressBar: true,
           });
+
+          setTimeout(() => {
+            this.$router.replace("/forgot-password");
+          }, 2500);
+          
         }
       }
     },

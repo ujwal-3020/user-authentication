@@ -14,7 +14,7 @@ const AuthService = {
 
     const passwordChangeToken = await user.createPasswordChangeToken();
 
-    const resetURL = `${protocol}://192.1.200.84:5174/reset-password/${passwordChangeToken}`;
+    const resetURL = `${protocol}://192.1.200.84:5173/reset-password/${passwordChangeToken}`;
 
     const message = `<p>We have received a request to reset your password. Please use the link below to reset your password:</p>
         <p><a href="${resetURL}">Reset Password</a></p>
@@ -47,18 +47,24 @@ const AuthService = {
     };
   },
 
-  resetPassword: async (token, newPassword) => {
+  resetPassword: async (token, newPassword, next) => {
     token = crypto.createHash("sha256").update(token).digest("hex");
 
     const user = await UserRepository.findUserByPasswordToken(token);
 
     if (!user) {
-      throw new Error("Token is invalid or has expired");
+      return next(
+        new CustomError(
+          "Your password reset token is either invalid or expired. Please request a new link.",
+          401
+        )
+      );
     }
 
-    await UserRepository.updateUserPassword(user, newPassword);
+    await UserRepository.updateUserPassword(user, newPassword, next);
 
     return {
+      status: "success",
       message: "Password has been reset. Please go to login page",
     };
   },

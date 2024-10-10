@@ -1,5 +1,6 @@
 const { db } = require("../../models/index.js");
 const { Op } = require("sequelize");
+const asyncErrorHandler = require("../../utils/asyncErrorHandler.js");
 
 const UserRepository = {
   findUserByEmail: async (email) => {
@@ -42,13 +43,13 @@ const UserRepository = {
     });
   },
 
-  updateUserPassword: async (user, newPassword) => {
+  updateUserPassword: asyncErrorHandler(async (user, newPassword, next) => {
     user.password = newPassword;
     user.passwordChangeToken = null;
     user.passwordChangeTokenExpires = null;
     user.passwordChangedAt = Date.now();
     return await user.save();
-  },
+  }),
 };
 
 module.exports = UserRepository;

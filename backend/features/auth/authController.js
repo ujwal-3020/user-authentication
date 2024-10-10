@@ -24,15 +24,22 @@ const AuthController = {
     const { password } = req.body;
     const token = req.params.token;
 
-    try {
-      const decryptedPassword = decryptPassword(password);
-      const result = await AuthService.resetPassword(token, decryptedPassword);
-      return res.status(200).json(result);
-    } catch (error) {
-      return res.status(400).json({
-        error: error.message,
-      });
+    if (!password) {
+      return next(new CustomError("Please provide new password", 400));
     }
+
+    if (!token) {
+      return next(new CustomError("Page not found", 400));
+    }
+
+    const decryptedPassword = decryptPassword(password);
+    const result = await AuthService.resetPassword(
+      token,
+      decryptedPassword,
+      next
+    );
+
+    return res.status(200).json(result);
   }),
 };
 
