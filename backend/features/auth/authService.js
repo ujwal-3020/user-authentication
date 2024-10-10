@@ -1,13 +1,17 @@
 const sendEmail = require("../../utils/mail.utils.js");
 const crypto = require("crypto");
 const UserRepository = require("../user/userRepository.js");
+const CustomError = require("../../utils/customError.js");
 
 const AuthService = {
-  forgotPassword: async (protocol, email) => {
+  forgotPassword: async (protocol, email, next) => {
     const user = await UserRepository.findUserByEmail(email);
-    if (!user) throw new Error("No account found with this email. Please enter a valid email address.");
+    if (!user) {
+      return next(
+        new CustomError("User with the given email does not exist!", 401)
+      );
+    }
 
-    // GENERATE A RESET TOKEN (RANDOM SECURE STRING)
     const passwordChangeToken = await user.createPasswordChangeToken();
 
     const resetURL = `${protocol}://192.1.200.84:5174/reset-password/${passwordChangeToken}`;
@@ -16,11 +20,26 @@ const AuthService = {
         <p><a href="${resetURL}">Reset Password</a></p>
         <p>This reset password link will expire in 15 minutes.</p>`;
 
-    await sendEmail({
-      email: user.email,
-      subject: "Password Reset",
-      message,
-    });
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: "Password Reset",
+        message,
+      });
+    } catch (error) {
+      user.passwordChangeToken = undefined;
+      user.passwordChangeTokenExpires = undefined;
+      await user.save({
+        validateBeforeSave: false,
+      });
+
+      return next(
+        new CustomError(
+          "There was an error sending password reset email. Please try again later!",
+          500
+        )
+      );
+    }
 
     return {
       status: "success",
