@@ -53,6 +53,7 @@ export default {
   methods: {
     async submitForgotPassword() {
       this.emailErrors = this.validateEmail(this.email);
+
       if (this.emailErrors.length == 0) {
         try {
           const config = {
@@ -60,6 +61,7 @@ export default {
               "Content-Type": "application/json",
             },
           };
+
           const res = await axios.post(
             "http://192.1.200.84:3000/api/v1/auth/forgot-password",
             {
@@ -67,15 +69,16 @@ export default {
             },
             config
           );
+
           toast.success(res.data.message, {
-            autoClose: 1500,
+            autoClose: 2000,
             type: "success",
             position: "top-right",
             hideProgressBar: true,
           });
         } catch (error) {
-          toast.error(error.response.data.error, {
-            autoClose: 1500,
+          toast.error(error.response.data.message, {
+            autoClose: 2000,
             type: "error",
             position: "top-right",
             hideProgressBar: true,
