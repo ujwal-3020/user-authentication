@@ -7,6 +7,7 @@ const { seedRoles } = require("./seeders/seedRoles.js");
 const cors = require("cors");
 const logger = require("./logger.js");
 const cookieParser = require("cookie-parser");
+const globalErrorHandler = require("./utils/globalErrorHandler.js");
 
 const app = express();
 app.use(express.json());
@@ -48,6 +49,8 @@ db.sequelize.sync({ force: false }).then(async () => {
   // await seedRoles();
   console.log("Database connected");
 });
+
+app.use(globalErrorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

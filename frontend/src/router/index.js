@@ -56,7 +56,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const isAuthenticated = store.getters.getisAuthenticated; 
+  const isAuthenticated = store.getters.getisAuthenticated;
 
   if (isAuthenticated) {
     if (to.meta.requiresAuth) {
@@ -66,7 +66,6 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     try {
-
       const result = await axios.get(
         "http://192.1.200.84:3000/api/v1/user/me",
         {
@@ -83,7 +82,7 @@ router.beforeEach(async (to, from, next) => {
         to.path === "/forgot-password" ||
         to.path === "/reset-password"
       ) {
-        next("/dahsboard");
+        next("/dashboard");
       } else {
         next();
       }
@@ -95,7 +94,6 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   }
-
 });
 
 export default router;
