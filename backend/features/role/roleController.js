@@ -1,7 +1,8 @@
+const asyncErrorHandler = require("../../utils/asyncErrorHandler.js");
 const RoleService = require("./roleService.js");
 
 const RoleController = {
-  createRole: async (req, res) => {
+  createRole: asyncErrorHandler(async (req, res, next) => {
     const { name } = req.body;
     try {
       const role = await RoleService.createRole(name);
@@ -13,7 +14,7 @@ const RoleController = {
         error: error.message,
       });
     }
-  },
+  }),
 };
 
 module.exports = RoleController;

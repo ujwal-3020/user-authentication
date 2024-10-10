@@ -1,8 +1,9 @@
 const UserService = require("./userService.js");
 const decryptPassword = require("../../utils/decryptPassword.js");
+const asyncErrorHandler = require("../../utils/asyncErrorHandler.js");
 
 const UserController = {
-  register: async (req, res) => {
+  register: asyncErrorHandler(async (req, res, next) => {
     const { username, email, password, role } = req.body;
     try {
       const decryptedPassword = decryptPassword(password);
@@ -21,9 +22,9 @@ const UserController = {
         error: error.message,
       });
     }
-  },
+  }),
 
-  login: async (req, res) => {
+  login: asyncErrorHandler(async (req, res, next) => {
     const { loginIdentifier, password, role } = req.body;
     try {
       if (!loginIdentifier) {
@@ -58,9 +59,9 @@ const UserController = {
         error: error.message,
       });
     }
-  },
+  }),
 
-  getUser: async (req, res) => {
+  getUser: asyncErrorHandler(async (req, res, next) => {
     let user = req.userInfo;
     // console.log(req.cookies);
 
@@ -75,9 +76,9 @@ const UserController = {
         error: error.message,
       });
     }
-  },
+  }),
 
-  logout: async (req, res) => {
+  logout: asyncErrorHandler(async (req, res, next) => {
     try {
       res.clearCookie("token", {
         path: "/",
@@ -92,7 +93,7 @@ const UserController = {
         error: error.message,
       });
     }
-  },
+  }),
 };
 
 module.exports = UserController;

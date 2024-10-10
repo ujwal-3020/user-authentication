@@ -1,8 +1,9 @@
 const AuthService = require("./authService.js");
 const decryptPassword = require("../../utils/decryptPassword.js");
+const asyncErrorHandler = require("../../utils/asyncErrorHandler.js");
 
 const AuthController = {
-  forgotPassword: async (req, res) => {
+  forgotPassword: asyncErrorHandler(async (req, res, next) => {
     const { email } = req.body;
     try {
       const result = await AuthService.forgotPassword(req.protocol, email);
@@ -12,9 +13,9 @@ const AuthController = {
         error: error.message,
       });
     }
-  },
+  }),
 
-  resetPassword: async (req, res) => {
+  resetPassword: asyncErrorHandler(async (req, res, next) => {
     const { password } = req.body;
     const token = req.params.token;
 
@@ -27,7 +28,7 @@ const AuthController = {
         error: error.message,
       });
     }
-  },
+  }),
 };
 
 module.exports = AuthController;
