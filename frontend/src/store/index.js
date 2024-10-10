@@ -69,7 +69,7 @@ export default new Vuex.Store({
           config
         );
       } catch (error) {
-        throw new Error(error.response.data.error);
+        throw new Error(error.response.data.message);
       }
     },
 

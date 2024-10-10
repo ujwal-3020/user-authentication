@@ -3,39 +3,45 @@ const { generateToken } = require("../../utils/jwt.utils.js");
 const UserRepository = require("./userRepository.js");
 const RoleRepository = require("../role/roleRepository.js");
 const UserRoleRepository = require("../userRole/userRoleRepository.js");
+const CustomError = require("../../utils/customError.js");
 
 const UserService = {
-  registerUser: async (username, email, password, roleName) => {
+  registerUser: async (username, email, password, roleName, next) => {
     let user = await UserRepository.findUserByEmail(email);
     let role;
 
     if (user) {
       role = await RoleRepository.findRoleByName(roleName);
-      if (!role) throw new Error("Invalid Role");
+      if (!role) {
+        return next(new CustomError("Invalid Role", 400));
+      }
 
       let existingUserRole = await UserRoleRepository.findUserRole(
         user.uuid,
         role.uuid
       );
-      if (existingUserRole) throw new Error("User already exists");
+      if (existingUserRole) {
+        return next(
+          new CustomError("User already exists. Please try to login", 400)
+        );
+      }
 
       const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch)
-        throw new Error(
-          "Use different mail or use the same password for registering as ",
-          role.name
+      if (!isMatch) {
+        return next(
+          new CustomError(
+            "Use different email ID or use the same password for registering as ",
+            role.name
+          )
         );
+      }
     } else {
       user = await UserRepository.createUser(username, email, password);
 
       role = await RoleRepository.findRoleByName(roleName);
-      if (!role) throw new Error("Invalid Role");
-
-      let existingUserRole = await UserRoleRepository.findUserRole(
-        user.uuid,
-        role.uuid
-      );
-      if (existingUserRole) throw new Error("User already exists");
+      if (!role) {
+        return next(new CustomError("Invalid Role", 400));
+      }
     }
 
     await UserRoleRepository.createUserRole(user.uuid, role.uuid);

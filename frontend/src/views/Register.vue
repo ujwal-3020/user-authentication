@@ -81,6 +81,7 @@ import {
   validateEmail,
   validatePassword,
 } from "../utils/validations.js";
+import encryptPassword from "../utils/encryptPassword.js";
 
 export default {
   data() {
@@ -124,11 +125,6 @@ export default {
         this.passwordErrors.length ||
         this.roleErrors.length
       ) {
-        // toast.error("Please enter all the values correctly", {
-        //   autoClose: 1500,
-        //   type: "error",
-        //   position: "top-right",
-        // });
         return;
       }
 
@@ -143,7 +139,7 @@ export default {
         });
 
         toast.success("Registered Successfully", {
-          autoClose: 1500,
+          autoClose: 2000,
           type: "success",
           position: "top-right",
           hideProgressBar: true,
@@ -151,10 +147,10 @@ export default {
 
         setTimeout(() => {
           this.$router.replace("/login");
-        }, 1500);
+        }, 2500);
       } catch (error) {
         toast.error(error.message, {
-          autoClose: 1500,
+          autoClose: 2000,
           type: "error",
           position: "top-right",
           hideProgressBar: true,

@@ -5,23 +5,20 @@ const asyncErrorHandler = require("../../utils/asyncErrorHandler.js");
 const UserController = {
   register: asyncErrorHandler(async (req, res, next) => {
     const { username, email, password, role } = req.body;
-    try {
-      const decryptedPassword = decryptPassword(password);
 
-      const user = await UserService.registerUser(
-        username,
-        email,
-        decryptedPassword,
-        role
-      );
-      return res.status(201).json({
-        user,
-      });
-    } catch (error) {
-      return res.status(400).json({
-        error: error.message,
-      });
-    }
+    const decryptedPassword = decryptPassword(password);
+
+    const user = await UserService.registerUser(
+      username,
+      email,
+      decryptedPassword,
+      role,
+      next
+    );
+
+    return res.status(201).json({
+      user,
+    });
   }),
 
   login: asyncErrorHandler(async (req, res, next) => {
