@@ -87,7 +87,7 @@ const UserService = {
     const token = generateToken({
       id: user.uuid,
       email: user.email,
-      role: roleName,
+      role_id: role.uuid,
     });
 
     return {

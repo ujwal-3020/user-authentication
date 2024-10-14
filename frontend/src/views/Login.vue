@@ -130,6 +130,7 @@ export default {
         setTimeout(() => {
           this.$router.replace("/dashboard");
         }, 2500);
+        
       } catch (error) {
         generateToast(error.message, "error");
       }

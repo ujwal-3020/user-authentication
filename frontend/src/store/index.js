@@ -71,22 +71,23 @@ export default new Vuex.Store({
       }
     },
 
-    async getUserInfo({ commit }, router) {
+    async getUserInfo({ commit, dispatch }, router) {
       try {
         const res = await axios.get("http://192.1.200.84:3000/api/v1/user/me", {
           withCredentials: true,
         });
+
         commit("setUser", res.data.user);
         commit("setIsAuthenticated", true);
       } catch (error) {
         generateToast(error.response.data.message, "error");
         setTimeout(() => {
-          dispatch("logout");
+          dispatch("logout", router);
         }, 2500);
       }
     },
 
-    async logout({ commit }) {
+    async logout({ commit }, router) {
       try {
         const res = await axios.post(
           "http://192.1.200.84:3000/api/v1/user/logout",
@@ -99,14 +100,13 @@ export default new Vuex.Store({
         commit("setUser", {});
         commit("setIsAuthenticated", false);
 
-        toast.success("Logged out Successfully", {
-          autoClose: 2000,
-          type: "success",
-          position: "top-right",
-          hideProgressBar: true,
-        });
+        generateToast("Logged out successfully", "success");
+
+        setTimeout(() => {
+          router.replace("/login");
+        }, 2500);
       } catch (error) {
-        throw new Error(error.response.data.message);
+        generateToast(error.message, "error");
       }
     },
   },

@@ -48,7 +48,7 @@ const UserController = {
       next
     );
 
-    res.cookie("token", result.token, {
+    await res.cookie("token", result.token, {
       httpOnly: true,
       path: "/",
       // secure: true,

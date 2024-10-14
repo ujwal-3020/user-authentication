@@ -27,14 +27,7 @@ export default {
   },
   methods: {
     async logout() {
-      try {
-        await this.$store.dispatch("logout");
-        setTimeout(() => {
-          this.$router.replace("/login");
-        }, 2500);
-      } catch (error) {
-        generateToast(error.message, "error");
-      }
+      await this.$store.dispatch("logout", this.$router);
     },
     goToProfile() {
       alert("This functionality will be available soon.");
