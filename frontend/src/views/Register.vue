@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { toast } from "vue3-toastify";
+import generateToast from '../utils/generateToast.js'
 import {
   validateUsername,
   validateEmail,
@@ -138,24 +138,16 @@ export default {
           role: this.selectedRole,
         });
 
-        toast.success("Registered Successfully", {
-          autoClose: 2000,
-          type: "success",
-          position: "top-right",
-          hideProgressBar: true,
-        });
+        generateToast("Registered Successfully", "success");
 
         setTimeout(() => {
           this.$router.replace("/login");
         }, 2500);
-        
+
       } catch (error) {
-        toast.error(error.message, {
-          autoClose: 2000,
-          type: "error",
-          position: "top-right",
-          hideProgressBar: true,
-        });
+
+        generateToast(error.message, "error");
+        
       }
     },
 

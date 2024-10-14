@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { toast } from "vue3-toastify";
+import generateToast from "../utils/generateToast.js";
 
 export default {
   data() {
@@ -125,26 +125,13 @@ export default {
           role: this.selectedRole,
         });
 
-        toast.success("Login Successfully", {
-          autoClose: 2000,
-          type: "success",
-          position: "top-right",
-          hideProgressBar: true,
-        });
+        generateToast('Login successfully', "success");
 
         setTimeout(() => {
           this.$router.replace("/dashboard");
         }, 2500);
-
       } catch (error) {
-
-        toast.error(error.message, {
-          autoClose: 2000,
-          type: "error",
-          position: "top-right",
-          hideProgressBar: true,
-        });
-
+        generateToast(error.message, "error");
       }
     },
     goToRegister() {

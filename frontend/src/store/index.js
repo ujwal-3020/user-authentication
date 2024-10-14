@@ -1,7 +1,7 @@
 import Vuex from "vuex";
 import axios from "axios";
-import { toast } from "vue3-toastify";
 import encryptPassword from "../utils/encryptPassword";
+import generateToast from "../utils/generateToast.js";
 
 export default new Vuex.Store({
   state: {
@@ -79,12 +79,7 @@ export default new Vuex.Store({
         commit("setUser", res.data.user);
         commit("setIsAuthenticated", true);
       } catch (error) {
-        toast.error(error.response.data.message, {
-          autoClose: 2000,
-          type: "error",
-          position: "top-right",
-          hideProgressBar: true,
-        });
+        generateToast(error.response.data.message, "error");
         setTimeout(() => {
           dispatch("logout");
         }, 2500);

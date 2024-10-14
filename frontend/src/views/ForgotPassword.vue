@@ -41,7 +41,8 @@
 
 <script>
 import axios from "axios";
-import { toast } from "vue3-toastify";
+import generateToast from "../utils/generateToast.js";
+import { validateEmail } from "../utils/validations.js";
 
 export default {
   data() {
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     async submitForgotPassword() {
-      this.emailErrors = this.validateEmail(this.email);
+      this.emailErrors = validateEmail(this.email);
 
       if (this.emailErrors.length == 0) {
         try {
@@ -70,33 +71,11 @@ export default {
             config
           );
 
-          toast.success(res.data.message, {
-            autoClose: 2000,
-            type: "success",
-            position: "top-right",
-            hideProgressBar: true,
-          });
+          generateToast(res.data.message, "success");
         } catch (error) {
-          toast.error(error.response.data.message, {
-            autoClose: 2000,
-            type: "error",
-            position: "top-right",
-            hideProgressBar: true,
-          });
+          generateToast(error.response.data.message, "error");
         }
       }
-    },
-    validateEmail(email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
-      const errors = [];
-      if (!email) {
-        errors.push("Email is required.");
-      } else if (!emailRegex.test(email)) {
-        errors.push("Email must be a valid email address.");
-      }
-      // console.log(errors);
-
-      return errors;
     },
     goToLogin() {
       this.$router.replace("/login");

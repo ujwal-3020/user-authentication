@@ -37,8 +37,9 @@
 
 <script>
 import axios from "axios";
-import { toast } from "vue3-toastify";
+import generateToast from "../utils/generateToast.js";
 import encryptPassword from "../utils/encryptPassword";
+import { validatePassword } from "../utils/validations.js";
 
 export default {
   data() {
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     async submitResetPassword() {
-      this.passwordErrors = this.validatePassword(this.password);
+      this.passwordErrors = validatePassword(this.password);
 
       if (this.passwordErrors.length == 0) {
         this.confirmPasswordErrors = this.validateConfirmPassword(
@@ -84,48 +85,22 @@ export default {
             config
           );
 
-          toast.success(
+          generateToast(
             "Password changed. You will be redirected to login page.",
-            {
-              autoClose: 2000,
-              type: "success",
-              position: "bottom-center",
-              hideProgressBar: true,
-            }
+            "success"
           );
 
           setTimeout(() => {
             this.$router.replace("/login");
           }, 2500);
-
         } catch (error) {
-
-          toast.error(error.response.data.message, {
-            autoClose: 2000,
-            type: "error",
-            position: "bottom-center",
-            hideProgressBar: true,
-          });
+          generateToast(error.response.data.message, "error");
 
           setTimeout(() => {
             this.$router.replace("/forgot-password");
           }, 2500);
-          
         }
       }
-    },
-    validatePassword(password) {
-      const passwordRegex =
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      const errors = [];
-      if (!password) {
-        errors.push("Password is required.");
-      } else if (!passwordRegex.test(password)) {
-        errors.push(
-          "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character and length should be minimum 8."
-        );
-      }
-      return errors;
     },
     validateConfirmPassword(password, confirmPassword) {
       const errors = [];

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { toast } from "vue3-toastify";
+import generateToast from "../utils/generateToast.js";
 export default {
   computed: {
     user() {
@@ -33,11 +33,7 @@ export default {
           this.$router.replace("/login");
         }, 2500);
       } catch (error) {
-        toast.error(error.message, {
-          autoClose: 2000,
-          position: "top-right",
-          hideProgressBar: true,
-        });
+        generateToast(error.message, "error");
       }
     },
     goToProfile() {
