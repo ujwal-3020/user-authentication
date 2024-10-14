@@ -71,9 +71,7 @@ export default new Vuex.Store({
       }
     },
 
-    async getUserInfo({ state, commit }) {
-      // console.log(jsCookie.get("token"));
-
+    async getUserInfo({ commit }, router) {
       try {
         const res = await axios.get("http://192.1.200.84:3000/api/v1/user/me", {
           withCredentials: true,
@@ -81,9 +79,15 @@ export default new Vuex.Store({
         commit("setUser", res.data.user);
         commit("setIsAuthenticated", true);
       } catch (error) {
-        commit("setUser", {});
-        commit("setIsAuthenticated", false);
-        throw new Error(error.response.data.error);
+        toast.error(error.response.data.message, {
+          autoClose: 2000,
+          type: "error",
+          position: "top-right",
+          hideProgressBar: true,
+        });
+        setTimeout(() => {
+          dispatch("logout");
+        }, 2500);
       }
     },
 
@@ -99,16 +103,15 @@ export default new Vuex.Store({
 
         commit("setUser", {});
         commit("setIsAuthenticated", false);
-        // localStorage.removeItem("isAuthenticated");
 
         toast.success("Logged out Successfully", {
-          autoClose: 1000,
+          autoClose: 2000,
           type: "success",
           position: "top-right",
           hideProgressBar: true,
         });
       } catch (error) {
-        throw new Error(error.response.data.error);
+        throw new Error(error.response.data.message);
       }
     },
   },

@@ -64,36 +64,22 @@ const UserController = {
 
   getUser: asyncErrorHandler(async (req, res, next) => {
     let user = req.userInfo;
-    // console.log(req.cookies);
 
-    try {
-      user = await UserService.getUser(user.email);
+    user = await UserService.getUser(user.email);
 
-      return res.status(200).json({
-        user,
-      });
-    } catch (error) {
-      return res.status(400).json({
-        error: error.message,
-      });
-    }
+    return res.status(200).json({
+      user,
+    });
   }),
 
   logout: asyncErrorHandler(async (req, res, next) => {
-    try {
-      res.clearCookie("token", {
-        path: "/",
-        httpOnly: true,
-      });
-      res.status(200).json({
-        message: "Logged out successfully",
-      });
-    } catch (error) {
-      console.log(error.message);
-      res.status(401).json({
-        error: error.message,
-      });
-    }
+    res.clearCookie("token", {
+      path: "/",
+      httpOnly: true,
+    });
+    res.status(200).json({
+      message: "Logged out successfully",
+    });
   }),
 };
 

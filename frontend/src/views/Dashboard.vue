@@ -31,12 +31,10 @@ export default {
         await this.$store.dispatch("logout");
         setTimeout(() => {
           this.$router.replace("/login");
-        }, 2000);
+        }, 2500);
       } catch (error) {
-        console.log(123);
-
         toast.error(error.message, {
-          autoClose: 1500,
+          autoClose: 2000,
           position: "top-right",
           hideProgressBar: true,
         });
