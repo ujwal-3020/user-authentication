@@ -80,7 +80,7 @@ const UserService = {
     if (!isMatch) {
       return next(
         new CustomError(
-          "Password is wrong. Please enter a valid password.",
+          "Sorry, your password is incorrect. Please enter correct password.",
           400
         )
       );
@@ -111,7 +111,7 @@ const UserService = {
     });
 
     return {
-      status: 'success',
+      status: "success",
       token,
       user,
     };
