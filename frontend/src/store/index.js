@@ -100,11 +100,11 @@ export default new Vuex.Store({
         commit("setUser", {});
         commit("setIsAuthenticated", false);
 
-        generateToast("Logged out successfully", "success");
-
         setTimeout(() => {
-          router.replace("/login");
-        }, 2500);
+          generateToast("Logged out successfully", "success");
+        }, 100);
+
+        router.replace("/login");
       } catch (error) {
         generateToast(error.message, "error");
       }
