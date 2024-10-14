@@ -8,14 +8,12 @@ const CustomError = require("../../utils/customError.js");
 const UserService = {
   registerUser: async (username, email, password, roleName, next) => {
     let user = await UserRepository.findUserByEmail(email);
-    let role;
+    let role = await RoleRepository.findRoleByName(roleName);
+    if (!role) {
+      return next(new CustomError("Invalid Role", 400));
+    }
 
     if (user) {
-      role = await RoleRepository.findRoleByName(roleName);
-      if (!role) {
-        return next(new CustomError("Invalid Role", 400));
-      }
-
       let existingUserRole = await UserRoleRepository.findUserRole(
         user.uuid,
         role.uuid
@@ -37,11 +35,6 @@ const UserService = {
       }
     } else {
       user = await UserRepository.createUser(username, email, password);
-
-      role = await RoleRepository.findRoleByName(roleName);
-      if (!role) {
-        return next(new CustomError("Invalid Role", 400));
-      }
     }
 
     await UserRoleRepository.createUserRole(user.uuid, role.uuid);

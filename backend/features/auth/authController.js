@@ -29,7 +29,7 @@ const AuthController = {
     }
 
     if (!token) {
-      return next(new CustomError("Page not found", 400));
+      return next(new CustomError("Page not found", 404));
     }
 
     const decryptedPassword = decryptPassword(password);
