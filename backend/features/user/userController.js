@@ -23,6 +23,8 @@ const UserController = {
       next
     );
 
+    if (!user) return;
+
     return res.status(201).json({
       user,
     });
@@ -48,6 +50,8 @@ const UserController = {
       next
     );
 
+    if (!result || result.status != "success") return;
+
     await res.cookie("token", result.token, {
       httpOnly: true,
       path: "/",
@@ -66,6 +70,8 @@ const UserController = {
     let user = req.userInfo;
 
     user = await UserService.getUser(user.email);
+
+    if (!user) return;
 
     return res.status(200).json({
       user,

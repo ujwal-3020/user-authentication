@@ -17,6 +17,9 @@ const AuthController = {
     }
 
     const result = await AuthService.forgotPassword(req.protocol, email, next);
+
+    if (!result || result.status != "success") return;
+
     return res.status(200).json(result);
   }),
 
@@ -38,6 +41,8 @@ const AuthController = {
       decryptedPassword,
       next
     );
+
+    if(!result || result.status != 'success') return
 
     return res.status(200).json(result);
   }),

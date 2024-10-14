@@ -1,7 +1,7 @@
 module.exports = (error, _1, res, _2) => {
   error.statusCode = error.statusCode || 500;
   error.status = error.status || "Error";
-  res.status(error.statusCode).json({
+  return res.status(error.statusCode).json({
     status: error.status,
     message: error.message,
   });

@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import generateToast from '../utils/generateToast.js'
+import generateToast from "../utils/generateToast.js";
 import {
   validateUsername,
   validateEmail,
@@ -100,7 +100,7 @@ export default {
   },
   watch: {
     username(newVal) {
-      this.usernameErrors = newVal ? [] : ["Username is required"];
+      this.usernameErrors = validateUsername(newVal);
     },
     email(newVal) {
       this.emailErrors = validateEmail(newVal);
@@ -143,11 +143,8 @@ export default {
         setTimeout(() => {
           this.$router.replace("/login");
         }, 2500);
-
       } catch (error) {
-
         generateToast(error.message, "error");
-        
       }
     },
 

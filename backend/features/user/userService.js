@@ -34,7 +34,27 @@ const UserService = {
           )
         );
       }
+
+      const isSameUsername = username == user.username;
+      if (!isSameUsername) {
+        return next(
+          new CustomError(
+            "Use different email ID or use the same username for registering as " +
+              role.name,
+            400
+          )
+        );
+      }
     } else {
+      user = await UserRepository.findUserByUsername(username);
+      if (user) {
+        return next(
+          new CustomError(
+            "This username is already in use. Please try another one.",
+            400
+          )
+        );
+      }
       user = await UserRepository.createUser(username, email, password);
     }
 
@@ -91,6 +111,7 @@ const UserService = {
     });
 
     return {
+      status: 'success',
       token,
       user,
     };

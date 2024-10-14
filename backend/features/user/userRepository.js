@@ -9,6 +9,12 @@ const UserRepository = {
     });
   },
 
+  findUserByUsername: async (username) => {
+    return await db.User.findOne({
+      where: { username },
+    });
+  },
+
   findUserByEmailOrUsername: async (loginIdentifier) => {
     return await db.User.findOne({
       where: {

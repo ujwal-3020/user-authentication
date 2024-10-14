@@ -88,6 +88,8 @@ router.beforeEach(async (to, from, next) => {
       }
     } catch (error) {
       if (to.meta.requiresAuth) {
+        store.commit("setUser", {});
+        store.commit("setIsAuthenticated", false);
         next("/login");
       } else {
         next();
