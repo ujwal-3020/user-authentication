@@ -1,10 +1,17 @@
 const UserService = require("./userService.js");
 const decryptPassword = require("../../utils/decryptPassword.js");
 const asyncErrorHandler = require("../../utils/asyncErrorHandler.js");
+const CustomError = require("../../utils/customError.js");
 
 const UserController = {
   register: asyncErrorHandler(async (req, res, next) => {
     const { username, email, password, role } = req.body;
+
+    if (!username || !email || !role || !password) {
+      return next(
+        new CustomError("Please enter all the details to register yourself.")
+      );
+    }
 
     const decryptedPassword = decryptPassword(password);
 
@@ -23,39 +30,36 @@ const UserController = {
 
   login: asyncErrorHandler(async (req, res, next) => {
     const { loginIdentifier, password, role } = req.body;
-    try {
-      if (!loginIdentifier) {
-        throw new Error("Please enter your username of email.");
-      }
-
-      const decryptedPassword = decryptPassword(password);
-
-      const result = await UserService.loginUser(
-        loginIdentifier,
-        decryptedPassword,
-        role
+    if (!loginIdentifier || !password || !role) {
+      return next(
+        new CustomError(
+          "Please enter your username or email, password and select a role for loggin in.",
+          400
+        )
       );
-
-      res.cookie("token", result.token, {
-        httpOnly: true,
-        path: "/",
-        // secure: true,
-        // sameSite: "Strict",
-        maxAge: 2592000000,
-      });
-
-      return res.status(200).json({
-        // token: result.token
-        user: result.user,
-        message: "Login successful",
-      });
-    } catch (error) {
-      // console.log(error);
-
-      return res.status(401).json({
-        error: error.message,
-      });
     }
+
+    const decryptedPassword = decryptPassword(password);
+
+    const result = await UserService.loginUser(
+      loginIdentifier,
+      decryptedPassword,
+      role,
+      next
+    );
+
+    res.cookie("token", result.token, {
+      httpOnly: true,
+      path: "/",
+      // secure: true,
+      // sameSite: "Strict",
+      maxAge: 2592000000,
+    });
+
+    return res.status(200).json({
+      user: result.user,
+      message: "Login successful",
+    });
   }),
 
   getUser: asyncErrorHandler(async (req, res, next) => {

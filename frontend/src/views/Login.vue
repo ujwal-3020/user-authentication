@@ -112,16 +112,10 @@ export default {
         this.roleErrors = this.selectedRole ? [] : ["Please select a role"];
 
         if (
-          // this.usernameErrors.length ||
           this.loginIdentifierErrors.length ||
           this.passwordErrors.length ||
           this.roleErrors.length
         ) {
-          // toast.error("Please enter all the values correctly", {
-          //   autoClose: 1500,
-          //   type: "error",
-          //   position: "top-right",
-          // });
           return;
         }
 
@@ -132,7 +126,7 @@ export default {
         });
 
         toast.success("Login Successfully", {
-          autoClose: 1500,
+          autoClose: 2000,
           type: "success",
           position: "top-right",
           hideProgressBar: true,
@@ -140,16 +134,17 @@ export default {
 
         setTimeout(() => {
           this.$router.replace("/dashboard");
-        }, 1500);
+        }, 2500);
+
       } catch (error) {
-        // console.log(error);
 
         toast.error(error.message, {
-          autoClose: 1500,
+          autoClose: 2000,
           type: "error",
           position: "top-right",
           hideProgressBar: true,
         });
+
       }
     },
     goToRegister() {

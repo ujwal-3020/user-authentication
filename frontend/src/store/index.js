@@ -49,10 +49,8 @@ export default new Vuex.Store({
         );
 
         commit("setIsAuthenticated", true);
-
-        // localStorage.setItem("isAuthenticated", true);
       } catch (error) {
-        throw new Error(error.response.data.error);
+        throw new Error(error.response.data.message);
       }
     },
 
