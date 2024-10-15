@@ -20,7 +20,7 @@
             v-model="email"
             variant="outlined"
             required
-            class="mt-4"
+            class="mt-3"
             :error-messages="emailErrors"
           ></v-text-field>
 
@@ -36,6 +36,17 @@
             @click:appendInner="visible = !visible"
           ></v-text-field>
 
+          <v-date-input
+            v-model="dob"
+            label="Date of Birth"
+            variant="outlined"
+            prepend-icon=""
+            prepend-inner-icon="$calendar"
+            :max="maxDate"
+            class="mt-3"
+            :error-messages="dobErrors"
+          ></v-date-input>
+
           <v-select
             label="Register As"
             v-model="selectedRole"
@@ -46,7 +57,7 @@
             required
           ></v-select>
 
-          <v-row class="mt-3">
+          <v-row class="mt-1">
             <v-col>
               <v-btn type="submit" color="primary" class="w-100"
                 >Register</v-btn
@@ -80,6 +91,7 @@ import {
   validateUsername,
   validateEmail,
   validatePassword,
+  validateAge,
 } from "../utils/validations.js";
 import encryptPassword from "../utils/encryptPassword.js";
 
@@ -96,6 +108,8 @@ export default {
       passwordErrors: [],
       roleErrors: [],
       visible: false,
+      dob: null,
+      dobErrors: [],
     };
   },
   watch: {
@@ -112,18 +126,26 @@ export default {
       this.roleErrors = newVal ? [] : ["Please select a role"];
     },
   },
+  computed: {
+    maxDate() {
+      const today = new Date();
+      return today.toISOString().substr(0, 10);
+    },
+  },
   methods: {
     async submitRegister() {
       this.usernameErrors = validateUsername(this.username);
       this.emailErrors = validateEmail(this.email);
       this.passwordErrors = validatePassword(this.password);
       this.roleErrors = this.selectedRole ? [] : ["Please select a role"];
+      this.dobErrors = validateAge(this.dob);
 
       if (
         this.usernameErrors.length ||
         this.emailErrors.length ||
         this.passwordErrors.length ||
-        this.roleErrors.length
+        this.roleErrors.length ||
+        this.dobErrors.length
       ) {
         return;
       }
@@ -135,6 +157,7 @@ export default {
           username: this.username,
           email: this.email,
           password: encryptedPassword,
+          dob: this.dob,
           role: this.selectedRole,
         });
 

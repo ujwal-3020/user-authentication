@@ -5,7 +5,7 @@ const CustomError = require("../../utils/customError.js");
 
 const UserController = {
   register: asyncErrorHandler(async (req, res, next) => {
-    const { username, email, password, role } = req.body;
+    const { username, email, password, dob, role } = req.body;
 
     if (!username || !email || !role || !password) {
       return next(
@@ -19,6 +19,7 @@ const UserController = {
       username,
       email,
       decryptedPassword,
+      dob,
       role,
       next
     );

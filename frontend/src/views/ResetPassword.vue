@@ -96,9 +96,11 @@ export default {
         } catch (error) {
           generateToast(error.response.data.message, "error");
 
-          setTimeout(() => {
-            this.$router.replace("/forgot-password");
-          }, 2500);
+          if (error.status != 400) {
+            setTimeout(() => {
+              this.$router.replace("/forgot-password");
+            }, 2500);
+          }
         }
       }
     },

@@ -44,4 +44,33 @@ const validateUsername = (username) => {
   return errors;
 };
 
-export { validateEmail, validatePassword, validateUsername };
+const validateAge = (dob) => {
+  const errors = [];
+  if (dob) {
+    const dobDate = new Date(dob);
+    const today = new Date();
+    const age = today.getFullYear() - dobDate.getFullYear();
+    const monthDiff = today.getMonth() - dobDate.getMonth();
+    const dateDiff = today.getDate() - dobDate.getDate();
+    const errormsg = "You must be at least 16 years old.";
+
+    // WE CAN COMBINE ALL CONDITIONS USED BELOW IN SINGLE IF CONDITION BUT THE CODE WILL BE TOO MESSY AND UNREADABLE.
+
+    if (age < 16) {
+      errors.push(errormsg);
+    } else if (age == 16) {
+      if (monthDiff < 0) {
+        errors.push(errormsg);
+      } else if (monthDiff == 0) {
+        if (dateDiff < 0) {
+          errors.push(errormsg);
+        }
+      }
+    }
+    return errors;
+  }
+  errors.push("Please select a date of birth.");
+  return errors;
+};
+
+export { validateEmail, validatePassword, validateUsername, validateAge };

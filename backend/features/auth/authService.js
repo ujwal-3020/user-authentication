@@ -2,6 +2,7 @@ const sendEmail = require("../../utils/mail.utils.js");
 const crypto = require("crypto");
 const UserRepository = require("../user/userRepository.js");
 const CustomError = require("../../utils/customError.js");
+const bcrypt = require("bcryptjs");
 
 const AuthService = {
   forgotPassword: async (protocol, email, next) => {
@@ -58,6 +59,13 @@ const AuthService = {
           "Your password reset token is either invalid or expired. Please request a new link.",
           401
         )
+      );
+    }
+
+    const isMatch = await bcrypt.compare(newPassword, user.password);
+    if (isMatch) {
+      return next(
+        new CustomError("New password should not be same as old password.", 400)
       );
     }
 

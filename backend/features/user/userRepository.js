@@ -30,11 +30,12 @@ const UserRepository = {
     });
   },
 
-  createUser: async (username, email, password) => {
+  createUser: async (username, email, password, dob) => {
     return await db.User.create({
       username,
       email,
       password,
+      dob,
     });
   },
 

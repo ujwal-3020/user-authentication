@@ -27,6 +27,21 @@ const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      dob: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+        get() {
+          const rawValue = this.getDataValue("dob");
+          if (!rawValue) return null;
+
+          const date = new Date(rawValue);
+          const day = String(date.getDate()).padStart(2, "0");
+          const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+          const year = date.getFullYear();
+
+          return `${month}/${day}/${year}`;
+        },
+      },
       passwordChangeToken: {
         type: DataTypes.STRING,
         allowNull: true,

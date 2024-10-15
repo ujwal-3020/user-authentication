@@ -6,7 +6,7 @@ const UserRoleRepository = require("../userRole/userRoleRepository.js");
 const CustomError = require("../../utils/customError.js");
 
 const UserService = {
-  registerUser: async (username, email, password, roleName, next) => {
+  registerUser: async (username, email, password, dob, roleName, next) => {
     let user = await UserRepository.findUserByEmail(email);
     let role = await RoleRepository.findRoleByName(roleName);
     if (!role) {
@@ -55,7 +55,7 @@ const UserService = {
           )
         );
       }
-      user = await UserRepository.createUser(username, email, password);
+      user = await UserRepository.createUser(username, email, password, dob);
     }
 
     await UserRoleRepository.createUserRole(user.uuid, role.uuid);
