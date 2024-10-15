@@ -2,6 +2,7 @@ import Vuex from "vuex";
 import axios from "axios";
 import encryptPassword from "../utils/encryptPassword";
 import generateToast from "../utils/generateToast.js";
+import router from "../router/index.js";
 
 export default new Vuex.Store({
   state: {
@@ -71,7 +72,7 @@ export default new Vuex.Store({
       }
     },
 
-    async getUserInfo({ commit, dispatch }, router) {
+    async getUserInfo({ commit, dispatch }) {
       try {
         const res = await axios.get("http://192.1.200.84:3000/api/v1/user/me", {
           withCredentials: true,
@@ -87,7 +88,7 @@ export default new Vuex.Store({
       }
     },
 
-    async logout({ commit }, router) {
+    async logout({ commit }) {
       try {
         const res = await axios.post(
           "http://192.1.200.84:3000/api/v1/user/logout",
@@ -103,10 +104,14 @@ export default new Vuex.Store({
         setTimeout(() => {
           generateToast("Logged out successfully", "success");
         }, 100);
-
         router.replace("/login");
       } catch (error) {
-        generateToast(error.message, "error");
+        setTimeout(() => {
+          generateToast(error.response.data.message, "error");
+        }, 100);
+        commit("setUser", {});
+        commit("setIsAuthenticated", false);
+        router.replace("/login");
       }
     },
   },

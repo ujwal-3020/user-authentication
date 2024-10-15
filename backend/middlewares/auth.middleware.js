@@ -9,7 +9,9 @@ const authenticate = (req, res, next) => {
   // console.log(token);
 
   if (!token) {
-    return next(new CustomError("Access denied. Please login again.", 400));
+    return next(
+      new CustomError("Something went wrong. Please login again", 401)
+    );
   }
   const decoded = verifyToken(token);
   // console.log(decoded);

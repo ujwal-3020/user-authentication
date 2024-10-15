@@ -130,6 +130,9 @@ export default {
     selectedRole(newVal) {
       this.roleErrors = newVal ? [] : ["Please select a role"];
     },
+    dob(newVal) {
+      this.dobErrors = validateAge(newVal);
+    },
   },
   computed: {
     maxDate() {
@@ -179,7 +182,6 @@ export default {
     goToLogin() {
       this.$router.replace("/login");
     },
-    
   },
 };
 </script>
