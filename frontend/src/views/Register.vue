@@ -12,6 +12,7 @@
             v-model="username"
             required
             variant="outlined"
+            color="primary"
             :error-messages="usernameErrors"
           ></v-text-field>
 
@@ -21,6 +22,7 @@
             variant="outlined"
             required
             class="mt-3"
+            color="primary"
             :error-messages="emailErrors"
           ></v-text-field>
 
@@ -30,6 +32,7 @@
             variant="outlined"
             required
             class="mt-3"
+            color="primary"
             :error-messages="passwordErrors"
             :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
             :type="visible ? 'text' : 'password'"
@@ -44,6 +47,7 @@
             prepend-inner-icon="$calendar"
             :max="maxDate"
             class="mt-3"
+            color="primary"
             :error-messages="dobErrors"
           ></v-date-input>
 
@@ -53,6 +57,7 @@
             :items="roles"
             variant="outlined"
             class="mt-3"
+            color="primary"
             :error-messages="roleErrors"
             required
           ></v-select>
@@ -174,6 +179,7 @@ export default {
     goToLogin() {
       this.$router.replace("/login");
     },
+    
   },
 };
 </script>

@@ -12,6 +12,7 @@
             variant="outlined"
             required
             class="mt-3"
+            color="primary"
             :error-messages="loginIdentifierErrors"
           ></v-text-field>
           <v-text-field
@@ -20,6 +21,7 @@
             variant="outlined"
             required
             class="mt-3"
+            color="primary"
             :error-messages="passwordErrors"
             :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
             :type="visible ? 'text' : 'password'"
@@ -31,6 +33,7 @@
             :items="roles"
             variant="outlined"
             class="mt-3"
+            color="primary"
             :error-messages="roleErrors"
             required
           ></v-select>
@@ -125,12 +128,11 @@ export default {
           role: this.selectedRole,
         });
 
-        generateToast('Login successfully', "success");
+        generateToast("Login successfully", "success");
 
         setTimeout(() => {
           this.$router.replace("/dashboard");
         }, 2500);
-        
       } catch (error) {
         generateToast(error.message, "error");
       }

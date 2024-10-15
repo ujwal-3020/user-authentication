@@ -12,6 +12,7 @@
             variant="outlined"
             required
             class="mt-3"
+            color="primary"
             :error-messages="emailErrors"
           ></v-text-field>
           <v-row class="mt-3 mb-3 d-flex justify-center px-3">

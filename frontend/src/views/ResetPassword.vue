@@ -12,6 +12,7 @@
             variant="outlined"
             required
             class="mt-3"
+            color="primary"
             :error-messages="passwordErrors"
             type="password"
           ></v-text-field>
@@ -21,6 +22,7 @@
             variant="outlined"
             required
             class="mt-3"
+            color="primary"
             :error-messages="confirmPasswordErrors"
             :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
             :type="visible ? 'text' : 'password'"
