@@ -6,12 +6,14 @@ const UserRepository = {
   findUserByEmail: async (email) => {
     return await db.User.findOne({
       where: { email },
+      attributes: ["uuid", "username", "dob", "email", "password"],
     });
   },
 
   findUserByUsername: async (username) => {
     return await db.User.findOne({
       where: { username },
+      attributes: ["uuid", "username", "dob", "email"],
     });
   },
 
@@ -27,6 +29,7 @@ const UserRepository = {
           },
         ],
       },
+      attributes: ["uuid", "username", "dob", "email", "password"],
     });
   },
 
@@ -47,6 +50,16 @@ const UserRepository = {
           [Op.gt]: Date.now(),
         },
       },
+      attributes: [
+        "uuid",
+        "username",
+        "dob",
+        "email",
+        "password",
+        "passwordChangeToken",
+        "passwordChangeTokenExpires",
+        "passwordChangedAt",
+      ],
     });
   },
 

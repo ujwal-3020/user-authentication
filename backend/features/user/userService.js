@@ -110,6 +110,8 @@ const UserService = {
       role_id: role.uuid,
     });
 
+    delete user.dataValues.password;
+
     return {
       status: "success",
       token,
@@ -119,6 +121,7 @@ const UserService = {
 
   getUser: async (email) => {
     const user = await UserRepository.findUserByEmail(email);
+    delete user.dataValues.password;
     return user;
   },
 };

@@ -50,7 +50,6 @@ const UserController = {
       role,
       next
     );
-
     if (!result || result.status != "success") return;
 
     await res.cookie("token", result.token, {
