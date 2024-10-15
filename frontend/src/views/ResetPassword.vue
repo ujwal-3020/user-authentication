@@ -87,21 +87,19 @@ export default {
             config
           );
 
-          generateToast(
-            "Password changed. You will be redirected to login page.",
-            "success"
-          );
-
-          setTimeout(() => {
-            this.$router.replace("/login");
-          }, 2500);
+          this.$router.replace("/login").then(() => {
+            generateToast(
+              "Password changed. You will be redirected to login page.",
+              "success"
+            );
+          });
         } catch (error) {
-          generateToast(error.response.data.message, "error");
-
           if (error.status != 400) {
-            setTimeout(() => {
-              this.$router.replace("/forgot-password");
-            }, 2500);
+            this.$router.replace("/forgot-password").then(() => {
+              generateToast(error.response.data.message, "error");
+            });
+          } else {
+            generateToast(error.response.data.message, "error");
           }
         }
       }

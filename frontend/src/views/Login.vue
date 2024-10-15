@@ -127,12 +127,11 @@ export default {
           password: this.password,
           role: this.selectedRole,
         });
-
-        generateToast("Logged in successfully", "success");
-
-        setTimeout(() => {
-          this.$router.replace("/dashboard");
-        }, 2500);
+        
+        this.$router.replace("/dashboard").then(() => {
+          generateToast("logged in successfully", "success");
+        });
+        
       } catch (error) {
         generateToast(error.message, "error");
       }

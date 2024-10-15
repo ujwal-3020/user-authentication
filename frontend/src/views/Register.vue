@@ -169,11 +169,10 @@ export default {
           role: this.selectedRole,
         });
 
-        generateToast("Registered Successfully", "success");
-
-        setTimeout(() => {
-          this.$router.replace("/login");
-        }, 2500);
+        this.$router.replace("/login").then(() => {
+          generateToast("Registered Successfully", "success");
+        });
+        
       } catch (error) {
         generateToast(error.message, "error");
       }

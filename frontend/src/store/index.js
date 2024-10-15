@@ -76,10 +76,9 @@ export default new Vuex.Store({
         commit("setUser", res.data.user);
         commit("setIsAuthenticated", true);
       } catch (error) {
-        generateToast(error.response.data.message, "error");
-        setTimeout(() => {
-          dispatch("logout");
-        }, 2500);
+        generateToast(error.response.data.message, "error", () =>
+          dispatch("logout")
+        );
       }
     },
 
@@ -93,17 +92,18 @@ export default new Vuex.Store({
           }
         );
 
-        setTimeout(() => {
-          generateToast("Logged out successfully", "success");
-        }, 100);
-      } catch (error) {
-        setTimeout(() => {
-          generateToast(error.response.data.message, "error");
-        }, 100);
-      } finally {
         commit("setUser", {});
         commit("setIsAuthenticated", false);
-        router.replace("/login");
+
+        router.replace("/login").then(() => {
+          generateToast("Logged out successfully", "success");
+        });
+      } catch (error) {
+        commit("setUser", {});
+        commit("setIsAuthenticated", false);
+        router.replace("/login").then(() => {
+          generateToast(error.response.data.message, "error");
+        });
       }
     },
   },

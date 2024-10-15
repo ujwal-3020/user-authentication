@@ -1,10 +1,11 @@
 import { toast } from "vue3-toastify";
 
-function showToast(message, type = "success") {
+function showToast(message, type = "success", onCloseCallback = null) {
   const config = {
-    autoClose: 2000,
+    autoClose: 1500,
     position: "top-right",
     hideProgressBar: true,
+    onClose: onCloseCallback,
   };
 
   if (type === "success") {
