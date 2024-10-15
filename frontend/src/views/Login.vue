@@ -147,31 +147,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.text-center {
-  text-align: center;
-}
-
-.form-container {
-  max-width: 400px;
-  width: 100%;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.register-link {
-  padding: 0;
-  text-transform: none;
-  font-weight: bold;
-}
-
-.register-link:hover {
-  background-color: #e0f7fa;
-  border-radius: 5px;
-}
-
-.rounded-corner {
-  border-radius: 8px 8px 0 0;
-}
-</style>
+<style scoped></style>

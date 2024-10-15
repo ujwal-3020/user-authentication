@@ -8,6 +8,7 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import { VDateInput } from "vuetify/lib/labs/components.mjs";
+import "./assets/style.css";
 
 const vuetify = createVuetify({
   components: {

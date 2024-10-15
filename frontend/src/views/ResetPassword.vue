@@ -117,20 +117,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.form-container {
-  max-width: 400px;
-  width: 100%;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.text-center {
-  text-align: center;
-}
-
-.rounded-corner {
-  border-radius: 8px 8px 0 0;
-}
-</style>
+<style scoped></style>

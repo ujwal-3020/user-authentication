@@ -76,11 +76,13 @@ router.beforeEach(async (to, from, next) => {
       store.commit("setUser", result.data.user);
       store.commit("setIsAuthenticated", true);
 
+      const tokenRegex = /^\/reset-password\/[^\/]+$/;
+
       if (
         to.path === "/login" ||
         to.path === "/register" ||
         to.path === "/forgot-password" ||
-        to.path === "/reset-password"
+        tokenRegex.test(to.path)
       ) {
         next("/dashboard");
       } else {

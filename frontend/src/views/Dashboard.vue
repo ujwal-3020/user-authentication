@@ -20,8 +20,6 @@ import generateToast from "../utils/generateToast.js";
 export default {
   computed: {
     user() {
-      // console.log(this.$store.state.user);
-
       return this.$store.state.user;
     },
   },
@@ -30,7 +28,7 @@ export default {
       await this.$store.dispatch("logout");
     },
     goToProfile() {
-      alert("This functionality will be available soon.");
+      generateToast("This functionality will be available soon.", "info");
     },
   },
   created() {
