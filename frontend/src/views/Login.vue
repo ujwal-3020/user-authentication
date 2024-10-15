@@ -128,7 +128,7 @@ export default {
           role: this.selectedRole,
         });
 
-        generateToast("Login successfully", "success");
+        generateToast("Logged in successfully", "success");
 
         setTimeout(() => {
           this.$router.replace("/dashboard");

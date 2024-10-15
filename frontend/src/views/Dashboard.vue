@@ -27,14 +27,14 @@ export default {
   },
   methods: {
     async logout() {
-      await this.$store.dispatch("logout", this.$router);
+      await this.$store.dispatch("logout");
     },
     goToProfile() {
       alert("This functionality will be available soon.");
     },
   },
   created() {
-    this.$store.dispatch("getUserInfo", this.$router);
+    this.$store.dispatch("getUserInfo");
   },
 };
 </script>

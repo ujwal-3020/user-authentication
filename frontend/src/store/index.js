@@ -6,7 +6,6 @@ import router from "../router/index.js";
 
 export default new Vuex.Store({
   state: {
-    // token: "",
     user: {},
     isAuthenticated: false,
   },
@@ -19,10 +18,6 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    // setToken(state, token) {
-    //   state.token = token;
-    //   localStorage.setItem("token", token);
-    // },
     setUser(state, user) {
       state.user = user;
       // console.log(user);
@@ -83,7 +78,7 @@ export default new Vuex.Store({
       } catch (error) {
         generateToast(error.response.data.message, "error");
         setTimeout(() => {
-          dispatch("logout", router);
+          dispatch("logout");
         }, 2500);
       }
     },
@@ -98,17 +93,14 @@ export default new Vuex.Store({
           }
         );
 
-        commit("setUser", {});
-        commit("setIsAuthenticated", false);
-
         setTimeout(() => {
           generateToast("Logged out successfully", "success");
         }, 100);
-        router.replace("/login");
       } catch (error) {
         setTimeout(() => {
           generateToast(error.response.data.message, "error");
         }, 100);
+      } finally {
         commit("setUser", {});
         commit("setIsAuthenticated", false);
         router.replace("/login");
